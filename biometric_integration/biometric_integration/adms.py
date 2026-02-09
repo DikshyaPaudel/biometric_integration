@@ -1,3 +1,5 @@
+import traceback
+
 import frappe
 from werkzeug.exceptions import HTTPException
 from werkzeug.wrappers import Response
@@ -6,11 +8,7 @@ from biometric_integration.biometric_integration.utils import process_attendance
 
 
 def handle_iclock_request():
-    """Intercept /iclock/* requests before Frappe's website renderer.
-
-    Called via before_request hook. If the path doesn't start with /iclock/,
-    returns immediately and lets Frappe handle the request normally.
-    """
+    """Intercept /iclock/* requests before Frappe's website renderer."""
     request = frappe.local.request
     path = request.path
 
@@ -20,6 +18,13 @@ def handle_iclock_request():
     method = request.method
     args = frappe.local.form_dict
 
+    # Log every request from device
+    frappe.log_error(
+        title="ADMS Request",
+        message=f"Method: {method}\nPath: {path}\nArgs: {dict(args)}\n"
+        f"Remote IP: {request.remote_addr}",
+    )
+
     # GET /iclock/getrequest?SN=xxx — device polling for commands
     if "getrequest" in path:
         _abort_with_plain("OK")
@@ -27,7 +32,11 @@ def handle_iclock_request():
     # GET /iclock/cdata?SN=xxx&options=all — device handshake
     if method == "GET" and args.get("options"):
         sn = args.get("SN", "")
-        frappe.logger("adms").info(f"Handshake from SN={sn}")
+
+        frappe.log_error(
+            title="ADMS Handshake",
+            message=f"Device connected: SN={sn}\nIP: {request.remote_addr}",
+        )
 
         config = (
             "GET OPTION FROM: {sn}\n"
@@ -52,25 +61,62 @@ def handle_iclock_request():
         sn = args.get("SN", "")
         table = args.get("table", "")
 
+        body = request.get_data(as_text=True)
+
+        frappe.log_error(
+            title=f"ADMS POST (table={table})",
+            message=f"SN: {sn}\nTable: {table}\nBody:\n{body[:500]}",
+        )
+
         if table == "ATTLOG":
-            body = request.get_data(as_text=True)
-            frappe.logger("adms").info(f"ATTLOG from SN={sn}: {body[:200]}")
+            try:
+                attendance_data = _parse_attlog(body)
 
-            attendance_data = _parse_attlog(body)
-
-            if attendance_data:
-                device_identifier = _get_device_identifier(sn)
-                result = process_attendance_records(
-                    attendance_data, device_identifier=device_identifier
+                frappe.log_error(
+                    title="ADMS Parsed Records",
+                    message=f"SN: {sn}\nParsed {len(attendance_data)} records:\n"
+                    + "\n".join(str(r) for r in attendance_data[:20]),
                 )
-                frappe.logger("adms").info(
-                    f"SN={sn}: {result.get('synced', 0)} synced, "
-                    f"{result.get('errors', 0)} errors"
+
+                if attendance_data:
+                    device_identifier = _get_device_identifier(sn)
+
+                    frappe.log_error(
+                        title="ADMS Device Lookup",
+                        message=f"SN: {sn}\nDevice identifier: {device_identifier}",
+                    )
+
+                    result = process_attendance_records(
+                        attendance_data, device_identifier=device_identifier
+                    )
+
+                    frappe.log_error(
+                        title="ADMS Sync Result",
+                        message=f"SN: {sn}\n"
+                        f"Synced: {result.get('synced', 0)}\n"
+                        f"Errors: {result.get('errors', 0)}\n"
+                        f"Message: {result.get('message', '')}\n"
+                        f"Error details: {result.get('error_details', [])}",
+                    )
+                else:
+                    frappe.log_error(
+                        title="ADMS No Records",
+                        message=f"SN: {sn}\nBody was not empty but parsed 0 records.\nBody: {body[:300]}",
+                    )
+
+            except Exception as e:
+                frappe.log_error(
+                    title="ADMS Processing Error",
+                    message=f"SN: {sn}\nError: {str(e)}\n{traceback.format_exc()}",
                 )
 
         _abort_with_plain("OK")
 
     # Fallback for any /iclock/ path
+    frappe.log_error(
+        title="ADMS Unknown Request",
+        message=f"Unhandled: {method} {path}\nArgs: {dict(args)}",
+    )
     _abort_with_plain("OK")
 
 
@@ -111,10 +157,8 @@ def _get_device_identifier(serial_number):
 
 
 def _abort_with_plain(text):
-    """Abort request processing and return plain text to the device.
-
-    Raises HTTPException which is caught by Frappe's app.py (line 134)
-    and returned directly as a WSGI response.
-    """
+    """Abort request processing and return plain text to the device."""
+    # Commit any pending DB writes (like log_error) before aborting
+    frappe.db.commit()
     response = Response(text, status=200, content_type="text/plain")
     raise HTTPException(response=response)
