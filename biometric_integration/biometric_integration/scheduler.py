@@ -1,5 +1,5 @@
 import frappe
-from biometric_integration.api.biometric_device import sync_attendance_from_device
+from biometric_integration.biometric_integration.api import sync_attendance_from_device
 
 def sync_biometric_attendance():
     """

@@ -150,8 +150,8 @@ app_license = "mit"
 # Scheduler Events
 scheduler_events = {
     "cron": {
-        "* * * * *": [  # Every 30 minutes
-            "biometric_integration.api.scheduler.sync_biometric_attendance"
+        "*/30 * * * *": [
+            "biometric_integration.biometric_integration.scheduler.sync_biometric_attendance"
         ]
     }
 }
