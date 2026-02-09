@@ -150,7 +150,7 @@ app_license = "mit"
 # Scheduler Events
 scheduler_events = {
     "cron": {
-        "*/30 * * * *": [
+        "* * * * *": [
             "biometric_integration.biometric_integration.scheduler.sync_biometric_attendance"
         ]
     }
@@ -203,7 +203,7 @@ scheduler_events = {
 
 # Request Events
 # ----------------
-# before_request = ["biometric_integration.utils.before_request"]
+before_request = ["biometric_integration.biometric_integration.adms.handle_iclock_request"]
 # after_request = ["biometric_integration.utils.after_request"]
 
 # Job Events
