@@ -148,13 +148,14 @@ app_license = "mit"
 # Scheduled Tasks
 # ---------------
 # Scheduler Events
-scheduler_events = {
-    "cron": {
-        "* * * * *": [
-            "biometric_integration.biometric_integration.scheduler.sync_biometric_attendance"
-        ]
-    }
-}
+# Disabled — ADMS push model is used instead (device pushes to /iclock/cdata)
+# scheduler_events = {
+#     "cron": {
+#         "*/30 * * * *": [
+#             "biometric_integration.biometric_integration.scheduler.sync_biometric_attendance"
+#         ]
+#     }
+# }
 # scheduler_events = {
 # 	"all": [
 # 		"biometric_integration.tasks.all"
