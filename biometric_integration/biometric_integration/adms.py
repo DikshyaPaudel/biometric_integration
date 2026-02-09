@@ -5,10 +5,13 @@ from werkzeug.exceptions import HTTPException
 from werkzeug.wrappers import Response
 
 from biometric_integration.biometric_integration.utils import process_attendance_records
-
+import logging
 
 def handle_iclock_request():
     """Intercept /iclock/* requests before Frappe's website renderer."""
+    logger = frappe.logger()
+    logger.setLevel(logging.INFO)
+
     request = frappe.local.request
     path = request.path
 
@@ -17,6 +20,7 @@ def handle_iclock_request():
 
     method = request.method
     args = frappe.local.form_dict
+    logger.info(f"Received ADMS request: {method} {path} with args {dict(args)} from {request.remote_addr}")
 
     # Log every request from device
     frappe.log_error(
