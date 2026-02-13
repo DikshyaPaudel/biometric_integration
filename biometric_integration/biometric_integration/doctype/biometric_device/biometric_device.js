@@ -46,13 +46,13 @@ function add_custom_buttons(frm) {
 		__("Actions")
 	);
 
-	frm.add_custom_button(
-		__("Clear Device Logs"),
-		function () {
-			clear_device_logs(frm);
-		},
-		__("Actions")
-	);
+	// frm.add_custom_button(
+	// 	__("Clear Device Logs"),
+	// 	function () {
+	// 		// clear_device_logs(frm);
+	// 	},
+	// 	__("Actions")
+	// );
 }
 
 function test_connection(frm) {

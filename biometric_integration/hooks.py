@@ -147,32 +147,14 @@ app_license = "mit"
 
 # Scheduled Tasks
 # ---------------
-# Scheduler Events
-# Disabled — ADMS push model is used instead (device pushes to /iclock/cdata)
-# scheduler_events = {
-#     "cron": {
-#         "*/30 * * * *": [
-#             "biometric_integration.biometric_integration.scheduler.sync_biometric_attendance"
-#         ]
-#     }
-# }
-# scheduler_events = {
-# 	"all": [
-# 		"biometric_integration.tasks.all"
-# 	],
-# 	"daily": [
-# 		"biometric_integration.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"biometric_integration.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"biometric_integration.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"biometric_integration.tasks.monthly"
-# 	],
-# }
+# Nightly job at 23:58 — create Attendance from Employee Checkins
+scheduler_events = {
+    "cron": {
+        "58 23 * * *": [
+            "biometric_integration.biometric_integration.utils.create_attendance_from_checkins"
+        ]
+    }
+}
 
 # Testing
 # -------
@@ -204,7 +186,7 @@ app_license = "mit"
 
 # Request Events
 # ----------------
-before_request = ["biometric_integration.biometric_integration.adms.handle_iclock_request"]
+# before_request = []
 # after_request = ["biometric_integration.utils.after_request"]
 
 # Job Events
