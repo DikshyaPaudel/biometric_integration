@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
 """
 K40 to ERPNext Bridge
-Pulls attendance punches from K40 device and pushes to ERPNext as Employee Checkins.
-
-Flow:
-  K40 Device → k40_bridge.py → ERPNext API → Employee Checkin
-  Then at 23:58, ERPNext scheduler creates Attendance from first/last checkins.
+Pulls attendance from K40 device and pushes to ERPNext
 """
+#bench --site your-site-name execute biometric_integration.biometric_integration.utils.create_attendance_from_checkins --kwargs "{'date': '2026-02-11'}"                                     
 
 import time
 import logging
 import json
 import os
-from datetime import datetime, date, timedelta
+from datetime import datetime, date
 from zk import ZK
 import requests
 
@@ -24,18 +21,14 @@ K40_PORT = 4370
 K40_SERIAL = 'A6F5215360564'
 
 ERPNEXT_URL = 'https://demo-sb.raindropinc.com'
-API_PATH = '/api/method/biometric_integration.biometric_integration.biometric_integration.push_bulk_attendance'
+WEBHOOK_PATH = '/api/method/biometric_integration.biometric_integration.biometric_integration.zkteco_push_attendance'
 
-SYNC_INTERVAL = 1800  # 30 minutes in seconds
+SYNC_INTERVAL = 120  # seconds (5 minutes)
 
-# Time windows — bridge runs within these and exits automatically
-# Morning: 09:30 to 11:00 | Evening: 18:30 to 21:30
-TIME_WINDOWS = [
-    {"start": "09:30", "end": "11:00"},
-    {"start": "18:30", "end": "21:30"},
-]
-
+# Log file on Desktop
 LOG_FILE = '/home/raindrop/Desktop/k40_bridge.log'
+
+# Persistent synced record storage
 SYNCED_RECORDS_FILE = '/home/raindrop/Desktop/k40_synced.json'
 
 # ============================================
@@ -53,11 +46,11 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
+logger.info(f"Logging started. Log file path: {LOG_FILE}")
 
 # ============================================
 # LOAD PERSISTENT SYNCED RECORDS
 # ============================================
-synced_records = set()
 if os.path.exists(SYNCED_RECORDS_FILE):
     try:
         with open(SYNCED_RECORDS_FILE, 'r') as f:
@@ -65,192 +58,154 @@ if os.path.exists(SYNCED_RECORDS_FILE):
         logger.info(f"Loaded {len(synced_records)} previously synced records")
     except Exception as e:
         logger.error(f"Error loading synced records: {e}")
+        synced_records = set()
+else:
+    synced_records = set()
 
+# ============================================
+# FUNCTIONS
+# ============================================
 
 def save_synced_records():
-    """Persist synced record IDs to disk."""
+    """Save synced records to file"""
     try:
         with open(SYNCED_RECORDS_FILE, 'w') as f:
             json.dump(list(synced_records), f)
     except Exception as e:
         logger.error(f"Error saving synced records: {e}")
 
-
 def get_attendance_from_k40():
-    """Connect to K40 and retrieve today's attendance records."""
+    """Connect to K40 and retrieve attendance records"""
     try:
         logger.info(f"Connecting to K40 at {K40_IP}:{K40_PORT}")
         conn = ZK(K40_IP, port=K40_PORT, timeout=5)
         zk = conn.connect()
 
+        logger.info("Connected! Disabling device...")
         zk.disable_device()
+
+        logger.info("Fetching attendance records...")
         attendances = zk.get_attendance()
+
+        logger.info("Re-enabling device...")
         zk.enable_device()
+
+        logger.info("Disconnecting...")
         zk.disconnect()
 
-        # Filter to today only
-        today_date = date.today()
-        today_records = [a for a in attendances if a.timestamp.date() == today_date]
-
-        logger.info(f"Retrieved {len(today_records)} today's records from K40 (total: {len(attendances)})")
-        return today_records
+        logger.info(f"Retrieved {len(attendances)} records from K40")
+        return attendances
 
     except Exception as e:
         logger.error(f"Error connecting to K40: {e}")
         return []
 
-
-def send_to_erpnext(records):
+def send_to_erpnext(attendance):
+    """Send single attendance record to ERPNext with full logging.
+    Returns: 'skipped' if already synced, 'synced' if newly synced, 'error' if failed.
     """
-    Send a batch of attendance records to ERPNext.
-    Only marks records as synced if the server confirms them individually.
-    Returns number of newly synced records.
-    """
-    if not records:
-        return 0
-
-    # Build payload — list of punches not already synced locally
-    punches = []
-    for att in records:
-        record_id = f"{att.user_id}_{att.timestamp}"
-        if record_id in synced_records:
-            continue
-        punches.append({
-            'employee_id': str(att.user_id),
-            'punch_time': att.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
-        })
-
-    if not punches:
-        logger.info("All records already synced locally")
-        return 0
-
-    logger.info(f"Sending {len(punches)} new records to ERPNext")
-
     try:
-        url = f"{ERPNEXT_URL}{API_PATH}"
+        record_id = f"{attendance.user_id}_{attendance.timestamp}"
+
+        if record_id in synced_records:
+            return 'skipped'
+
+        data = {
+            'device_id': K40_SERIAL,
+            'employee_id': str(attendance.user_id),
+            'punch_time': attendance.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+            'punch_type': 'IN'  # Adjust if needed
+        }
+
+        url = f"{ERPNEXT_URL}{WEBHOOK_PATH}"
         response = requests.post(
             url,
-            json={
-                'device_id': K40_SERIAL,
-                'punches': json.dumps(punches),
-            },
+            json=data,
             headers={'Content-Type': 'application/json'},
-            timeout=30
+            timeout=10
         )
 
-        logger.info(f"ERPNext response: {response.status_code} - {response.text[:500]}")
+        # Log ERPNext response
+        logger.info(f"ERPNext Response for {record_id}: {response.status_code} - {response.text[:500]}")
 
         if response.status_code != 200:
-            logger.warning(f"Failed: HTTP {response.status_code}")
-            return 0
+            logger.warning(f"⚠️ Failed to sync Employee {attendance.user_id}: HTTP {response.status_code}")
+            return 'error'
 
-        resp_json = response.json()
-        message = resp_json.get('message', {})
+        # Check response body for application-level errors
+        try:
+            resp_json = response.json()
+            message = resp_json.get('message', {})
+            if isinstance(message, dict) and message.get('status') == 'error':
+                error_msg = message.get('message', 'Unknown error')
+                # Duplicate checkin means record already exists — treat as synced
+                if 'already has a log with the same timestamp' in error_msg:
+                    logger.info(f"Already exists: Employee {attendance.user_id} at {attendance.timestamp}")
+                    synced_records.add(record_id)
+                    save_synced_records()
+                    return 'skipped'
+                logger.error(f" ERPNext error for Employee {attendance.user_id}: {error_msg}")
+                return 'error'
+        except (ValueError, AttributeError):
+            pass
 
-        if isinstance(message, dict) and message.get('success'):
-            # Only mark records the server confirmed as synced/skipped
-            for rid in message.get('synced_punches', []):
-                synced_records.add(rid)
-            save_synced_records()
-
-            # Log failed ones — bridge will retry next cycle
-            failed = message.get('failed_punches', [])
-            if failed:
-                logger.warning(f"Server failed {len(failed)} records (will retry): {failed[:5]}")
-
-            synced_count = message.get('synced', 0)
-            skipped_count = message.get('skipped', 0)
-            error_count = message.get('errors', 0)
-            logger.info(f"Result: synced={synced_count}, skipped={skipped_count} duplicates, errors={error_count}")
-            return synced_count
-
-        error_msg = message.get('message', 'Unknown error') if isinstance(message, dict) else str(message)
-        logger.error(f"ERPNext error: {error_msg}")
-        return 0
+        synced_records.add(record_id)
+        save_synced_records()
+        logger.info(f"✅ Synced: Employee {attendance.user_id} at {attendance.timestamp}")
+        return 'synced'
 
     except Exception as e:
-        logger.error(f"Error sending to ERPNext: {e}")
-        return 0
-
-
-def cleanup_old_synced_records():
-    """Remove synced record IDs older than 2 days to prevent file bloat."""
-    today_str = date.today().strftime('%Y-%m-%d')
-    yesterday_str = (date.today() - timedelta(days=1)).strftime('%Y-%m-%d')
-
-    before = len(synced_records)
-    to_keep = set()
-    for rid in synced_records:
-        # record_id format: "user_id_2026-02-12 08:30:00"
-        if today_str in rid or yesterday_str in rid:
-            to_keep.add(rid)
-
-    synced_records.clear()
-    synced_records.update(to_keep)
-
-    removed = before - len(synced_records)
-    if removed:
-        save_synced_records()
-        logger.info(f"Cleaned up {removed} old synced records")
-
+        logger.error(f"❌ Error sending Employee {attendance.user_id} to ERPNext: {e}")
+        return 'error'
 
 def sync_cycle():
-    """One complete sync cycle."""
-    logger.info("=" * 50)
+    """One complete sync cycle"""
+    logger.info("="*50)
     logger.info("Starting sync cycle...")
 
-    # Clean old tracked records to prevent file bloat
-    cleanup_old_synced_records()
+    # Get attendance from K40
+    attendances = get_attendance_from_k40()
 
-    records = get_attendance_from_k40()
-    if not records:
+    today_date = date.today()
+    # Only today
+    attendances = [att for att in attendances if att.timestamp.date() == today_date]
+
+    if not attendances:
         logger.info("No records to sync")
         return
 
-    synced = send_to_erpnext(records)
-    logger.info(f"Sync cycle complete: {synced} new checkins created")
-    logger.info("=" * 50)
+    synced_count = 0
+    skipped_count = 0
+    error_count = 0
 
+    for att in attendances:
+        result = send_to_erpnext(att)
+        if result == 'synced':
+            synced_count += 1
+        elif result == 'skipped':
+            skipped_count += 1
+        else:
+            error_count += 1
 
-def is_within_time_window():
-    """Check if current time falls within any configured time window."""
-    # TEMP: disabled time window for testing — always allow
-    return True, "23:59"
-    # now = datetime.now().strftime('%H:%M')
-    # for window in TIME_WINDOWS:
-    #     if window["start"] <= now <= window["end"]:
-    #         return True, window["end"]
-    # return False, None
-
+    logger.info(f"Sync complete: {synced_count} new, {skipped_count} skipped, {error_count} errors")
+    logger.info("="*50)
 
 def main():
-    """Main loop — runs within time windows, exits when window ends."""
-    logger.info("K40 Bridge Started")
+    """Main loop"""
+    logger.info("🚀 K40 Bridge Started!")
     logger.info(f"K40 Device: {K40_IP}:{K40_PORT}")
     logger.info(f"ERPNext URL: {ERPNEXT_URL}")
-    logger.info(f"Sync Interval: {SYNC_INTERVAL}s (30 min)")
-    logger.info(f"Time windows: {TIME_WINDOWS}")
-
-    in_window, window_end = is_within_time_window()
-    if not in_window:
-        logger.info(f"Not within any time window. Current time: {datetime.now().strftime('%H:%M')}. Exiting.")
-        return
-
-    logger.info(f"Within time window (until {window_end}). Starting sync...")
+    logger.info(f"Sync Interval: {SYNC_INTERVAL} seconds")
+    logger.info(f"Persistent Synced Records File: {SYNCED_RECORDS_FILE}")
+    logger.info("="*50)
 
     # Initial sync
     sync_cycle()
 
-    # Keep syncing every 30 mins until window ends
+    # Continuous sync
     while True:
         try:
             time.sleep(SYNC_INTERVAL)
-
-            in_window, window_end = is_within_time_window()
-            if not in_window:
-                logger.info("Time window ended. Exiting.")
-                break
-
             sync_cycle()
         except KeyboardInterrupt:
             logger.info("Stopping bridge...")
@@ -258,7 +213,6 @@ def main():
         except Exception as e:
             logger.error(f"Unexpected error: {e}")
             time.sleep(60)
-
 
 if __name__ == '__main__':
     main()

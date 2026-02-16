@@ -147,11 +147,12 @@ app_license = "mit"
 
 # Scheduled Tasks
 # ---------------
-# Nightly job at 23:58 — create Attendance from Employee Checkins
+# Nightly at 23:58 — submit draft Attendance and mark absent employees
 scheduler_events = {
     "cron": {
         "58 23 * * *": [
-            "biometric_integration.biometric_integration.utils.create_attendance_from_checkins"
+            "biometric_integration.biometric_integration.utils.submit_draft_attendance",
+            "biometric_integration.biometric_integration.utils.mark_absent_employees",
         ]
     }
 }

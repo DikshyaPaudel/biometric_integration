@@ -1,25 +1,20 @@
 import frappe
 from frappe.utils import now_datetime
 from datetime import datetime, timedelta
-
-
-DUPLICATE_WINDOW_MINUTES = 15
+from collections import defaultdict
 
 
 def process_attendance_records(attendance_data, device_identifier=None):
     """
-    Process biometric punch records and create Employee Checkin docs.
-
-    - First punch of the day for an employee → log_type = "IN"
-    - Subsequent punches → log_type = "OUT"
-    - Duplicate detection: skip if punch is within 15 mins of last checkin
+    Process biometric punch records: group by (user_id, date), then create/update
+    exactly one IN checkin, one OUT checkin, and one draft Attendance per employee per day.
 
     Args:
         attendance_data: list of {"user_id": str, "timestamp": str} dicts
         device_identifier: optional device name/IP
 
     Returns:
-        dict with success, synced, errors, message, error_details
+        dict with success, synced, errors, message, error_details, synced_punches, failed_punches
     """
     if not attendance_data:
         return {
@@ -31,10 +26,13 @@ def process_attendance_records(attendance_data, device_identifier=None):
 
     synced = 0
     errors = 0
-    skipped = 0
     error_details = []
-    synced_punches = []   # record IDs that were actually created or safely skipped
-    failed_punches = []   # record IDs that failed (bridge should retry these)
+    synced_punches = []
+    failed_punches = []
+
+    # Parse all punches and group by (user_id, date)
+    grouped = defaultdict(list)
+    record_ids_by_group = defaultdict(list)
 
     for record in attendance_data:
         user_id = str(record.get("user_id", "")).strip()
@@ -44,67 +42,68 @@ def process_attendance_records(attendance_data, device_identifier=None):
 
         record_id = f"{user_id}_{timestamp_str}"
 
-        try:
-            ts = _parse_timestamp(timestamp_str)
-            if not ts:
-                errors += 1
-                error_details.append(f"Invalid timestamp: {timestamp_str}")
-                failed_punches.append(record_id)
-                continue
+        ts = _parse_timestamp(timestamp_str)
+        if not ts:
+            errors += 1
+            error_details.append(f"Invalid timestamp: {timestamp_str}")
+            failed_punches.append(record_id)
+            continue
 
-            # Find employee by attendance_device_id
+        key = (user_id, ts.date())
+        grouped[key].append(ts)
+        record_ids_by_group[key].append(record_id)
+
+    # Process each (user_id, date) group
+    for (user_id, punch_date), timestamps in grouped.items():
+        group_record_ids = record_ids_by_group[(user_id, punch_date)]
+
+        try:
             employee = frappe.db.get_value(
                 "Employee",
                 {"attendance_device_id": user_id},
-                ["name", "employee_name"],
+                ["name", "employee_name", "company", "default_shift"],
                 as_dict=True,
             )
 
             if not employee:
                 errors += 1
-                error_details.append(
-                    f"Employee not found for device ID: {user_id}"
-                )
-                failed_punches.append(record_id)
+                error_details.append(f"Employee not found for device ID: {user_id}")
+                failed_punches.extend(group_record_ids)
                 continue
 
-            # Duplicate detection: skip if punch within 15 mins of last checkin
-            if _is_duplicate_punch(employee.name, ts):
-                skipped += 1
-                synced_punches.append(record_id)  # safe to mark as done
-                continue
+            timestamps.sort()
+            first_punch = timestamps[0]
+            last_punch = timestamps[-1]
 
-            # Determine log_type: first checkin of the day = IN, rest = OUT
-            log_type = _get_log_type(employee.name, ts)
+            # Create/update IN checkin (always the first punch)
+            _upsert_checkin_in(employee, punch_date, first_punch, device_identifier)
 
-            # Create Employee Checkin
-            checkin = frappe.new_doc("Employee Checkin")
-            checkin.employee = employee.name
-            checkin.employee_name = employee.employee_name
-            checkin.time = ts
-            checkin.log_type = log_type
-            checkin.latitude = 27.7228
-            checkin.longitude = 85.3211
-            if device_identifier:
-                checkin.device_id = device_identifier
-            checkin.insert(ignore_permissions=True)
-            synced += 1
-            synced_punches.append(record_id)
+            # Create/update OUT checkin only when there are multiple punches
+            if len(timestamps) > 1:
+                _upsert_checkin_out(employee, punch_date, last_punch, device_identifier)
+
+            # Create/update draft Attendance
+            out_time = last_punch if len(timestamps) > 1 else None
+            _upsert_attendance(employee, punch_date, first_punch, out_time)
+
+            synced += len(timestamps)
+            synced_punches.extend(group_record_ids)
 
             frappe.logger("biometric").info(
-                f"Checkin created: {employee.name} {log_type} at {ts}"
+                f"Processed {employee.name} on {punch_date}: "
+                f"IN={first_punch}, OUT={last_punch if len(timestamps) > 1 else 'N/A'}, "
+                f"punches={len(timestamps)}"
             )
 
         except Exception as e:
             errors += 1
             error_details.append(f"{user_id}: {str(e)[:100]}")
-            failed_punches.append(record_id)
+            failed_punches.extend(group_record_ids)
             frappe.log_error(
-                title="Biometric Checkin Error",
-                message=f"Employee Device ID: {user_id}\nError: {str(e)}",
+                title="Biometric Processing Error",
+                message=f"Employee Device ID: {user_id}\nDate: {punch_date}\nError: {str(e)}",
             )
 
-    # Update Biometric Device record
     if device_identifier:
         _update_device_record(device_identifier, synced)
 
@@ -113,13 +112,300 @@ def process_attendance_records(attendance_data, device_identifier=None):
     return {
         "success": True,
         "synced": synced,
-        "skipped": skipped,
         "errors": errors,
-        "message": f"Synced {synced}, skipped {skipped} duplicates, {errors} errors.",
+        "message": f"Synced {synced} punches, {errors} errors.",
         "error_details": error_details[:10],
         "synced_punches": synced_punches,
         "failed_punches": failed_punches,
     }
+
+
+def _upsert_checkin_in(employee, punch_date, in_time, device_identifier=None):
+    """Create IN checkin if none exists for this employee+date."""
+    day_start = datetime.combine(punch_date, datetime.min.time())
+    day_end = datetime.combine(punch_date, datetime.max.time())
+
+    existing = frappe.db.exists(
+        "Employee Checkin",
+        {
+            "employee": employee.name,
+            "log_type": "IN",
+            "time": ["between", [day_start, day_end]],
+        },
+    )
+
+    if existing:
+        return
+
+    checkin = frappe.new_doc("Employee Checkin")
+    checkin.employee = employee.name
+    checkin.employee_name = employee.employee_name
+    checkin.time = in_time
+    checkin.log_type = "IN"
+    checkin.skip_auto_attendance = 1
+    checkin.latitude = 27.7228
+    checkin.longitude = 85.3211
+    if device_identifier:
+        checkin.device_id = device_identifier
+    checkin.insert(ignore_permissions=True)
+
+
+def _upsert_checkin_out(employee, punch_date, out_time, device_identifier=None):
+    """Create OUT checkin if none exists, or update time if new punch is later."""
+    day_start = datetime.combine(punch_date, datetime.min.time())
+    day_end = datetime.combine(punch_date, datetime.max.time())
+
+    existing = frappe.db.get_value(
+        "Employee Checkin",
+        {
+            "employee": employee.name,
+            "log_type": "OUT",
+            "time": ["between", [day_start, day_end]],
+        },
+        ["name", "time"],
+        as_dict=True,
+    )
+
+    if existing:
+        if out_time > existing.time:
+            frappe.db.set_value("Employee Checkin", existing.name, "time", out_time)
+        return
+
+    checkin = frappe.new_doc("Employee Checkin")
+    checkin.employee = employee.name
+    checkin.employee_name = employee.employee_name
+    checkin.time = out_time
+    checkin.log_type = "OUT"
+    checkin.skip_auto_attendance = 1
+    checkin.latitude = 27.7228
+    checkin.longitude = 85.3211
+    if device_identifier:
+        checkin.device_id = device_identifier
+    checkin.insert(ignore_permissions=True)
+
+
+def _upsert_attendance(employee, punch_date, in_time, out_time=None):
+    """
+    Create or update a draft Attendance for the employee on punch_date.
+    If a submitted (docstatus=1) Attendance exists, skip.
+    If a draft (docstatus=0) exists, update it.
+    Otherwise create a new draft.
+    """
+    # Check for submitted attendance — do not touch it
+    submitted = frappe.db.exists(
+        "Attendance",
+        {
+            "employee": employee.name,
+            "attendance_date": punch_date,
+            "docstatus": 1,
+        },
+    )
+    if submitted:
+        return
+
+    # Calculate working hours
+    working_hours = 0
+    if in_time and out_time:
+        working_hours = round((out_time - in_time).total_seconds() / 3600, 2)
+
+    # Calculate late entry / early exit
+    late_entry, early_exit = _calculate_late_early(employee, in_time, out_time)
+
+    if early_exit:
+        status = "Half Day"
+        leave_type = "Leave Without Pay"
+    else:
+        status = "Present"
+        leave_type = ""
+
+    att_data = {
+        "employee": employee.name,
+        "employee_name": employee.employee_name,
+        "attendance_date": punch_date,
+        "company": employee.company,
+        "in_time": in_time,
+        "out_time": out_time,
+        "working_hours": working_hours,
+        "status": status,
+        "late_entry": late_entry,
+        "early_exit": early_exit,
+    }
+    if employee.default_shift:
+        att_data["shift"] = employee.default_shift
+    if leave_type:
+        att_data["leave_type"] = leave_type
+
+    # Check for existing draft
+    draft = frappe.db.exists(
+        "Attendance",
+        {
+            "employee": employee.name,
+            "attendance_date": punch_date,
+            "docstatus": 0,
+        },
+    )
+
+    if draft:
+        doc = frappe.get_doc("Attendance", draft)
+        doc.update(att_data)
+        doc.save(ignore_permissions=True)
+    else:
+        att = frappe.new_doc("Attendance")
+        att.update(att_data)
+        att.insert(ignore_permissions=True)
+
+
+def _calculate_late_early(employee, in_time, out_time=None):
+    """
+    Determine late_entry and early_exit using the employee's Shift Type
+    grace periods.
+
+    Returns:
+        (late_entry: bool, early_exit: bool)
+    """
+    late_entry = False
+    early_exit = False
+
+    if not employee.default_shift:
+        return late_entry, early_exit
+
+    shift = frappe.db.get_value(
+        "Shift Type",
+        employee.default_shift,
+        [
+            "start_time",
+            "end_time",
+            "enable_late_entry_marking",
+            "late_entry_grace_period",
+            "enable_early_exit_marking",
+            "early_exit_grace_period",
+        ],
+        as_dict=True,
+    )
+
+    if not shift:
+        return late_entry, early_exit
+
+    # shift.start_time and shift.end_time are timedelta objects
+    # Convert in_time / out_time to timedelta for comparison
+    in_td = timedelta(hours=in_time.hour, minutes=in_time.minute, seconds=in_time.second)
+
+    if shift.enable_late_entry_marking:
+        grace = timedelta(minutes=shift.late_entry_grace_period or 0)
+        if in_td > shift.start_time + grace:
+            late_entry = True
+
+    if out_time and shift.enable_early_exit_marking:
+        out_td = timedelta(hours=out_time.hour, minutes=out_time.minute, seconds=out_time.second)
+        grace = timedelta(minutes=shift.early_exit_grace_period or 0)
+        if out_td < shift.end_time - grace:
+            early_exit = True
+
+    return late_entry, early_exit
+
+
+def submit_draft_attendance(date=None):
+    """
+    Nightly job: submit all draft Attendance records for the given date (default today).
+    """
+    from frappe.utils import getdate, today
+
+    target_date = getdate(date) if date else getdate(today())
+
+    drafts = frappe.get_all(
+        "Attendance",
+        filters={
+            "attendance_date": target_date,
+            "docstatus": 0,
+        },
+        pluck="name",
+    )
+
+    submitted = 0
+    errors = 0
+
+    for att_name in drafts:
+        try:
+            doc = frappe.get_doc("Attendance", att_name)
+            doc.submit()
+            submitted += 1
+        except Exception as e:
+            errors += 1
+            frappe.log_error(
+                title="Attendance Submit Error",
+                message=f"Attendance: {att_name}\nDate: {target_date}\nError: {str(e)}",
+            )
+
+    frappe.db.commit()
+
+    frappe.logger("biometric").info(
+        f"Submit drafts: submitted={submitted} errors={errors} for {target_date}"
+    )
+
+    return {"submitted": submitted, "errors": errors}
+
+
+def mark_absent_employees(date=None):
+    """
+    Nightly job: for all Active employees without any Attendance for the date,
+    create and submit an Absent attendance record.
+    """
+    from frappe.utils import getdate, today
+
+    target_date = getdate(date) if date else getdate(today())
+
+    # Get all active employees
+    all_active = frappe.get_all(
+        "Employee",
+        filters={"status": "Active"},
+        fields=["name", "employee_name", "company", "default_shift"],
+    )
+
+    # Get employees who already have attendance for the date
+    employees_with_attendance = frappe.get_all(
+        "Attendance",
+        filters={
+            "attendance_date": target_date,
+            "docstatus": ["!=", 2],
+        },
+        pluck="employee",
+    )
+    employees_with_attendance = set(employees_with_attendance)
+
+    marked = 0
+    errors = 0
+
+    for emp in all_active:
+        if emp.name in employees_with_attendance:
+            continue
+
+        try:
+            att = frappe.new_doc("Attendance")
+            att.employee = emp.name
+            att.employee_name = emp.employee_name
+            att.attendance_date = target_date
+            att.company = emp.company
+            att.status = "Absent"
+            if emp.default_shift:
+                att.shift = emp.default_shift
+            att.insert(ignore_permissions=True)
+            att.submit()
+            marked += 1
+        except Exception as e:
+            errors += 1
+            frappe.log_error(
+                title="Mark Absent Error",
+                message=f"Employee: {emp.name}\nDate: {target_date}\nError: {str(e)}",
+            )
+
+    frappe.db.commit()
+
+    frappe.logger("biometric").info(
+        f"Mark absent: marked={marked} errors={errors} for {target_date}"
+    )
+
+    return {"marked": marked, "errors": errors}
+
 
 
 def _parse_timestamp(timestamp_str):
@@ -133,226 +419,6 @@ def _parse_timestamp(timestamp_str):
         return datetime.fromisoformat(timestamp_str)
     except ValueError:
         return None
-
-
-def _is_duplicate_punch(employee, punch_time):
-    """Check if a punch is within DUPLICATE_WINDOW_MINUTES of the last checkin."""
-    window_start = punch_time - timedelta(minutes=DUPLICATE_WINDOW_MINUTES)
-    window_end = punch_time + timedelta(minutes=DUPLICATE_WINDOW_MINUTES)
-
-    existing = frappe.db.exists(
-        "Employee Checkin",
-        {
-            "employee": employee,
-            "time": ["between", [window_start, window_end]],
-        },
-    )
-    return bool(existing)
-
-
-def _get_log_type(employee, punch_time):
-    """
-    Determine log_type for the punch.
-    First checkin of the day → IN, any subsequent → OUT.
-    """
-    punch_date = punch_time.date()
-    day_start = datetime.combine(punch_date, datetime.min.time())
-    day_end = datetime.combine(punch_date, datetime.max.time())
-
-    existing_today = frappe.db.count(
-        "Employee Checkin",
-        {
-            "employee": employee,
-            "time": ["between", [day_start, day_end]],
-        },
-    )
-
-    return "IN" if existing_today == 0 else "OUT"
-
-
-def create_attendance_from_checkins(date=None):
-    """
-    Nightly job (runs at 23:58): create Attendance from Employee Checkins.
-
-    For each employee who has checkins today:
-    - First checkin → check-in time
-    - Last checkin → check-out time
-    - Calculate working hours and status
-    - Late entry / early exit determined from Shift Type start_time / end_time
-    - Early exit → status = Half Day, leave_type = Leave Without Pay
-    - Create/update Attendance record
-    """
-    from frappe.utils import getdate, today
-
-    target_date = getdate(date) if date else getdate(today())
-    day_start = datetime.combine(target_date, datetime.min.time())
-    day_end = datetime.combine(target_date, datetime.max.time())
-
-    employees_with_checkins = frappe.db.sql(
-        """
-        SELECT DISTINCT employee
-        FROM `tabEmployee Checkin`
-        WHERE time BETWEEN %s AND %s
-        """,
-        (day_start, day_end),
-        as_dict=True,
-    )
-
-    created = 0
-    errors = 0
-
-    for row in employees_with_checkins:
-        try:
-            emp = row.employee
-
-            checkins = frappe.db.sql(
-                """
-                SELECT time, log_type
-                FROM `tabEmployee Checkin`
-                WHERE employee = %s AND time BETWEEN %s AND %s
-                ORDER BY time ASC
-                """,
-                (emp, day_start, day_end),
-                as_dict=True,
-            )
-
-            if not checkins:
-                continue
-
-            check_in = checkins[0].time
-            check_out = checkins[-1].time if len(checkins) > 1 else None
-
-            # Calculate working hours
-            working_hours = 0
-            if check_in and check_out:
-                working_hours = round(
-                    (check_out - check_in).total_seconds() / 3600, 2
-                )
-
-            # Get employee details
-            employee = frappe.db.get_value(
-                "Employee",
-                emp,
-                ["name", "company", "employee_name", "default_shift"],
-                as_dict=True,
-            )
-
-            if not employee:
-                continue
-
-            # Determine late entry / early exit from Shift Type
-            late_entry = False
-            early_exit = False
-            shift_start = None
-            shift_end = None
-
-            if employee.default_shift:
-                shift = frappe.db.get_value(
-                    "Shift Type",
-                    employee.default_shift,
-                    ["start_time", "end_time"],
-                    as_dict=True,
-                )
-                if shift:
-                    shift_start = shift.start_time
-                    shift_end = shift.end_time
-
-                    # shift start_time/end_time are timedelta objects
-                    # check_in is datetime — compare using time-of-day
-                    checkin_time = timedelta(
-                        hours=check_in.hour,
-                        minutes=check_in.minute,
-                        seconds=check_in.second,
-                    )
-                    if checkin_time > shift_start:
-                        late_entry = True
-
-                    if check_out:
-                        checkout_time = timedelta(
-                            hours=check_out.hour,
-                            minutes=check_out.minute,
-                            seconds=check_out.second,
-                        )
-                        if checkout_time < shift_end:
-                            early_exit = True
-
-            # Determine status
-            if early_exit:
-                status = "Half Day"
-                leave_type = "Leave Without Pay"
-            else:
-                status = "Present"
-                leave_type = ""
-
-            # Build attendance fields
-            att_data = {
-                "employee": employee.name,
-                "employee_name": employee.employee_name,
-                "attendance_date": target_date,
-                "company": employee.company,
-                "in_time": check_in,
-                "out_time": check_out,
-                "working_hours": working_hours,
-                "status": status,
-                "late_entry": late_entry,
-                "early_exit": early_exit,
-            }
-            if employee.default_shift:
-                att_data["shift"] = employee.default_shift
-            if leave_type:
-                att_data["leave_type"] = leave_type
-
-            # Check existing attendance for this date
-            existing = frappe.db.exists(
-                "Attendance",
-                {
-                    "employee": emp,
-                    "attendance_date": target_date,
-                    "docstatus": ["!=", 2],
-                },
-            )
-
-            if existing:
-                doc = frappe.get_doc("Attendance", existing)
-                if doc.docstatus == 1:
-                    doc.cancel()
-                    att = frappe.new_doc("Attendance")
-                    att.update(att_data)
-                    att.amended_from = doc.name
-                    att.insert(ignore_permissions=True)
-                    att.submit()
-                else:
-                    doc.update(att_data)
-                    doc.save(ignore_permissions=True)
-                    doc.submit()
-            else:
-                att = frappe.new_doc("Attendance")
-                att.update(att_data)
-                att.insert(ignore_permissions=True)
-                att.submit()
-
-            created += 1
-
-            frappe.logger("biometric").info(
-                f"Attendance: {emp} on {target_date} "
-                f"IN={check_in} OUT={check_out} hours={working_hours} "
-                f"status={status} late={late_entry} early_exit={early_exit}"
-            )
-
-        except Exception as e:
-            errors += 1
-            frappe.log_error(
-                title="Attendance Creation Error",
-                message=f"Employee: {row.employee}\nDate: {target_date}\nError: {str(e)}",
-            )
-
-    frappe.db.commit()
-
-    frappe.logger("biometric").info(
-        f"Nightly attendance: created={created} errors={errors} for {target_date}"
-    )
-
-    return {"created": created, "errors": errors}
 
 
 def _update_device_record(device_identifier, synced_count):
