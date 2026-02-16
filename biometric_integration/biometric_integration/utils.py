@@ -83,6 +83,8 @@ def process_attendance_records(attendance_data, device_identifier=None):
             checkin.employee_name = employee.employee_name
             checkin.time = ts
             checkin.log_type = log_type
+            checkin.latitude = 0                                                    
+            checkin.longitude = 0  
             if device_identifier:
                 checkin.device_id = device_identifier
             checkin.insert(ignore_permissions=True)
