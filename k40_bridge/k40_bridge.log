@@ -1,0 +1,388 @@
+2026-02-16 15:53:33,394 - INFO - K40 Bridge - syncing for 2026-02-16
+2026-02-16 15:53:33,394 - INFO - Connecting to K40 at 192.168.18.200
+2026-02-16 15:53:33,848 - INFO - Retrieved 387 total records from K40
+2026-02-16 15:53:33,848 - INFO - Found 11 records for 2026-02-16
+2026-02-16 15:53:34,185 - INFO - Synced: Employee 14 at 2026-02-16 08:42:42
+2026-02-16 15:53:34,248 - INFO - Synced: Employee 5 at 2026-02-16 09:05:58
+2026-02-16 15:53:34,307 - INFO - Synced: Employee 5 at 2026-02-16 09:05:59
+2026-02-16 15:53:34,364 - INFO - Synced: Employee 9 at 2026-02-16 09:08:15
+2026-02-16 15:53:34,426 - INFO - Synced: Employee 7 at 2026-02-16 09:08:27
+2026-02-16 15:53:34,459 - INFO - Synced: Employee 17 at 2026-02-16 09:18:42
+2026-02-16 15:53:34,496 - INFO - Synced: Employee 19 at 2026-02-16 09:36:24
+2026-02-16 15:53:34,559 - INFO - Synced: Employee 2 at 2026-02-16 09:59:51
+2026-02-16 15:53:34,590 - INFO - Synced: Employee 16 at 2026-02-16 10:13:31
+2026-02-16 15:53:34,649 - INFO - Synced: Employee 8 at 2026-02-16 10:23:01
+2026-02-16 15:53:34,683 - INFO - Synced: Employee 1 at 2026-02-16 13:05:23
+2026-02-16 15:53:34,684 - INFO - Done: 11 synced, 0 errors
+2026-02-16 15:56:00,864 - INFO - K40 Bridge - syncing for 2026-02-16
+2026-02-16 15:56:00,865 - INFO - Connecting to K40 at 192.168.18.200
+2026-02-16 15:56:01,392 - INFO - Retrieved 387 total records from K40
+2026-02-16 15:56:01,393 - INFO - Found 11 records for 2026-02-16
+2026-02-16 15:56:01,461 - INFO - Synced: Employee 14 at 2026-02-16 08:42:42
+2026-02-16 15:56:01,525 - INFO - Synced: Employee 5 at 2026-02-16 09:05:58
+2026-02-16 15:56:01,579 - INFO - Synced: Employee 5 at 2026-02-16 09:05:59
+2026-02-16 15:56:01,631 - INFO - Synced: Employee 9 at 2026-02-16 09:08:15
+2026-02-16 15:56:01,685 - INFO - Synced: Employee 7 at 2026-02-16 09:08:27
+2026-02-16 15:56:01,720 - INFO - Synced: Employee 17 at 2026-02-16 09:18:42
+2026-02-16 15:56:01,756 - INFO - Synced: Employee 19 at 2026-02-16 09:36:24
+2026-02-16 15:56:01,823 - INFO - Synced: Employee 2 at 2026-02-16 09:59:51
+2026-02-16 15:56:01,854 - INFO - Synced: Employee 16 at 2026-02-16 10:13:31
+2026-02-16 15:56:01,916 - INFO - Synced: Employee 8 at 2026-02-16 10:23:01
+2026-02-16 15:56:01,948 - INFO - Synced: Employee 1 at 2026-02-16 13:05:23
+2026-02-16 15:56:01,948 - INFO - Done: 11 synced, 0 errors
+2026-02-16 15:56:23,986 - INFO - Logging started. Log file path: /home/raindrop/frappe-bench/apps/biometric_integration/k40_bridge/k40_bridge.log
+2026-02-16 15:56:23,986 - INFO - K40 Bridge Started!
+2026-02-16 15:56:23,986 - INFO - K40 Device: 192.168.18.200
+2026-02-16 15:56:23,986 - INFO - ERPNext URL: https://demo-sb.raindropinc.com
+2026-02-16 15:56:23,986 - INFO - Target date: 2026-02-16
+2026-02-16 15:56:23,986 - INFO - ==================================================
+2026-02-16 15:56:23,986 - INFO - Connecting to K40 at 192.168.18.200
+2026-02-16 15:56:24,066 - INFO - Connected! Disabling device...
+2026-02-16 15:56:24,083 - INFO - Fetching attendance records...
+2026-02-16 15:56:24,439 - INFO - Re-enabling device...
+2026-02-16 15:56:24,458 - INFO - Disconnecting...
+2026-02-16 15:56:24,473 - INFO - Retrieved 387 records from K40
+2026-02-16 15:56:24,473 - INFO - Found 11 records for 2026-02-16
+2026-02-16 15:56:24,551 - INFO - ERPNext Response for 14_2026-02-16 08:42:42: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["14_2026-02-16 08:42:42"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-037 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 15:56:24,551 - INFO - Synced: Employee 14 at 2026-02-16 08:42:42
+2026-02-16 15:56:24,615 - INFO - ERPNext Response for 5_2026-02-16 09:05:58: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-16 09:05:58"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-006 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 15:56:24,615 - INFO - Synced: Employee 5 at 2026-02-16 09:05:58
+2026-02-16 15:56:24,679 - INFO - ERPNext Response for 5_2026-02-16 09:05:59: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-16 09:05:59"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-006 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 15:56:24,680 - INFO - Synced: Employee 5 at 2026-02-16 09:05:59
+2026-02-16 15:56:24,740 - INFO - ERPNext Response for 9_2026-02-16 09:08:15: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["9_2026-02-16 09:08:15"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-040 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 15:56:24,740 - INFO - Synced: Employee 9 at 2026-02-16 09:08:15
+2026-02-16 15:56:24,805 - INFO - ERPNext Response for 7_2026-02-16 09:08:27: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-16 09:08:27"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-026 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 15:56:24,805 - INFO - Synced: Employee 7 at 2026-02-16 09:08:27
+2026-02-16 15:56:24,841 - INFO - ERPNext Response for 17_2026-02-16 09:18:42: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 17"],"synced_punches":[],"failed_punches":["17_2026-02-16 09:18:42"]}}
+2026-02-16 15:56:24,841 - INFO - Synced: Employee 17 at 2026-02-16 09:18:42
+2026-02-16 15:56:24,871 - INFO - ERPNext Response for 19_2026-02-16 09:36:24: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 19"],"synced_punches":[],"failed_punches":["19_2026-02-16 09:36:24"]}}
+2026-02-16 15:56:24,871 - INFO - Synced: Employee 19 at 2026-02-16 09:36:24
+2026-02-16 15:56:24,930 - INFO - ERPNext Response for 2_2026-02-16 09:59:51: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["2_2026-02-16 09:59:51"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-038 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 15:56:24,930 - INFO - Synced: Employee 2 at 2026-02-16 09:59:51
+2026-02-16 15:56:24,963 - INFO - ERPNext Response for 16_2026-02-16 10:13:31: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 16"],"synced_punches":[],"failed_punches":["16_2026-02-16 10:13:31"]}}
+2026-02-16 15:56:24,963 - INFO - Synced: Employee 16 at 2026-02-16 10:13:31
+2026-02-16 15:56:25,028 - INFO - ERPNext Response for 8_2026-02-16 10:23:01: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["8_2026-02-16 10:23:01"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-004 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 15:56:25,029 - INFO - Synced: Employee 8 at 2026-02-16 10:23:01
+2026-02-16 15:56:25,072 - INFO - ERPNext Response for 1_2026-02-16 13:05:23: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 1"],"synced_punches":[],"failed_punches":["1_2026-02-16 13:05:23"]}}
+2026-02-16 15:56:25,072 - INFO - Synced: Employee 1 at 2026-02-16 13:05:23
+2026-02-16 15:56:25,072 - INFO - Done: 11 synced, 0 errors
+2026-02-16 15:56:25,072 - INFO - ==================================================
+2026-02-16 15:57:29,806 - INFO - Logging started. Log file path: /home/raindrop/frappe-bench/apps/biometric_integration/k40_bridge/k40_bridge.log
+2026-02-16 15:57:29,806 - INFO - K40 Bridge Started!
+2026-02-16 15:57:29,806 - INFO - K40 Device: 192.168.18.200
+2026-02-16 15:57:29,806 - INFO - ERPNext URL: https://demo-sb.raindropinc.com
+2026-02-16 15:57:29,806 - INFO - Target date: 2026-02-16
+2026-02-16 15:57:29,806 - INFO - ==================================================
+2026-02-16 15:57:29,806 - INFO - Connecting to K40 at 192.168.18.200
+2026-02-16 15:57:29,862 - INFO - Connected! Disabling device...
+2026-02-16 15:57:29,876 - INFO - Fetching attendance records...
+2026-02-16 15:57:30,254 - INFO - Re-enabling device...
+2026-02-16 15:57:30,276 - INFO - Disconnecting...
+2026-02-16 15:57:30,294 - INFO - Retrieved 387 records from K40
+2026-02-16 15:57:30,294 - INFO - Found 11 records for 2026-02-16
+2026-02-16 15:57:30,350 - INFO - ERPNext Response for 14_2026-02-16 08:42:42: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["14_2026-02-16 08:42:42"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-037 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 15:57:30,350 - INFO - Synced: Employee 14 at 2026-02-16 08:42:42
+2026-02-16 15:57:30,406 - INFO - ERPNext Response for 5_2026-02-16 09:05:58: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-16 09:05:58"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-006 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 15:57:30,406 - INFO - Synced: Employee 5 at 2026-02-16 09:05:58
+2026-02-16 15:57:30,463 - INFO - ERPNext Response for 5_2026-02-16 09:05:59: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-16 09:05:59"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-006 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 15:57:30,464 - INFO - Synced: Employee 5 at 2026-02-16 09:05:59
+2026-02-16 15:57:30,513 - INFO - ERPNext Response for 9_2026-02-16 09:08:15: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["9_2026-02-16 09:08:15"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-040 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 15:57:30,514 - INFO - Synced: Employee 9 at 2026-02-16 09:08:15
+2026-02-16 15:57:30,564 - INFO - ERPNext Response for 7_2026-02-16 09:08:27: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-16 09:08:27"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-026 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 15:57:30,565 - INFO - Synced: Employee 7 at 2026-02-16 09:08:27
+2026-02-16 15:57:30,593 - INFO - ERPNext Response for 17_2026-02-16 09:18:42: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 17"],"synced_punches":[],"failed_punches":["17_2026-02-16 09:18:42"]}}
+2026-02-16 15:57:30,593 - INFO - Synced: Employee 17 at 2026-02-16 09:18:42
+2026-02-16 15:57:30,623 - INFO - ERPNext Response for 19_2026-02-16 09:36:24: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 19"],"synced_punches":[],"failed_punches":["19_2026-02-16 09:36:24"]}}
+2026-02-16 15:57:30,623 - INFO - Synced: Employee 19 at 2026-02-16 09:36:24
+2026-02-16 15:57:30,676 - INFO - ERPNext Response for 2_2026-02-16 09:59:51: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["2_2026-02-16 09:59:51"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-038 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 15:57:30,676 - INFO - Synced: Employee 2 at 2026-02-16 09:59:51
+2026-02-16 15:57:30,704 - INFO - ERPNext Response for 16_2026-02-16 10:13:31: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 16"],"synced_punches":[],"failed_punches":["16_2026-02-16 10:13:31"]}}
+2026-02-16 15:57:30,705 - INFO - Synced: Employee 16 at 2026-02-16 10:13:31
+2026-02-16 15:57:30,756 - INFO - ERPNext Response for 8_2026-02-16 10:23:01: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["8_2026-02-16 10:23:01"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-004 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 15:57:30,757 - INFO - Synced: Employee 8 at 2026-02-16 10:23:01
+2026-02-16 15:57:30,788 - INFO - ERPNext Response for 1_2026-02-16 13:05:23: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 1"],"synced_punches":[],"failed_punches":["1_2026-02-16 13:05:23"]}}
+2026-02-16 15:57:30,788 - INFO - Synced: Employee 1 at 2026-02-16 13:05:23
+2026-02-16 15:57:30,788 - INFO - Done: 11 synced, 0 errors
+2026-02-16 15:57:30,788 - INFO - ==================================================
+2026-02-16 16:01:22,144 - INFO - Logging started. Log file path: /home/raindrop/frappe-bench/apps/biometric_integration/k40_bridge/k40_bridge.log
+2026-02-16 16:01:22,144 - INFO - K40 Bridge Started!
+2026-02-16 16:01:22,145 - INFO - K40 Device: 192.168.18.200
+2026-02-16 16:01:22,145 - INFO - ERPNext URL: https://demo-sb.raindropinc.com
+2026-02-16 16:01:22,145 - INFO - Target date: 2026-02-16
+2026-02-16 16:01:22,145 - INFO - ==================================================
+2026-02-16 16:01:22,145 - INFO - Connecting to K40 at 192.168.18.200
+2026-02-16 16:01:22,202 - INFO - Connected! Disabling device...
+2026-02-16 16:01:22,215 - INFO - Fetching attendance records...
+2026-02-16 16:01:22,553 - INFO - Re-enabling device...
+2026-02-16 16:01:22,575 - INFO - Disconnecting...
+2026-02-16 16:01:22,590 - INFO - Retrieved 387 records from K40
+2026-02-16 16:01:22,590 - INFO - Found 11 records for 2026-02-16
+2026-02-16 16:01:22,783 - INFO - ERPNext Response for 14_2026-02-16 08:42:42: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["14_2026-02-16 08:42:42"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-037 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:01:22,783 - INFO - Synced: Employee 14 at 2026-02-16 08:42:42
+2026-02-16 16:01:22,840 - INFO - ERPNext Response for 5_2026-02-16 09:05:58: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-16 09:05:58"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-006 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:01:22,840 - INFO - Synced: Employee 5 at 2026-02-16 09:05:58
+2026-02-16 16:01:22,896 - INFO - ERPNext Response for 5_2026-02-16 09:05:59: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-16 09:05:59"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-006 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:01:22,897 - INFO - Synced: Employee 5 at 2026-02-16 09:05:59
+2026-02-16 16:01:22,952 - INFO - ERPNext Response for 9_2026-02-16 09:08:15: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["9_2026-02-16 09:08:15"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-040 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:01:22,952 - INFO - Synced: Employee 9 at 2026-02-16 09:08:15
+2026-02-16 16:01:23,011 - INFO - ERPNext Response for 7_2026-02-16 09:08:27: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-16 09:08:27"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-026 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:01:23,011 - INFO - Synced: Employee 7 at 2026-02-16 09:08:27
+2026-02-16 16:01:23,043 - INFO - ERPNext Response for 17_2026-02-16 09:18:42: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 17"],"synced_punches":[],"failed_punches":["17_2026-02-16 09:18:42"]}}
+2026-02-16 16:01:23,044 - INFO - Synced: Employee 17 at 2026-02-16 09:18:42
+2026-02-16 16:01:23,088 - INFO - ERPNext Response for 19_2026-02-16 09:36:24: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 19"],"synced_punches":[],"failed_punches":["19_2026-02-16 09:36:24"]}}
+2026-02-16 16:01:23,089 - INFO - Synced: Employee 19 at 2026-02-16 09:36:24
+2026-02-16 16:01:23,161 - INFO - ERPNext Response for 2_2026-02-16 09:59:51: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["2_2026-02-16 09:59:51"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-038 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:01:23,161 - INFO - Synced: Employee 2 at 2026-02-16 09:59:51
+2026-02-16 16:01:23,193 - INFO - ERPNext Response for 16_2026-02-16 10:13:31: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 16"],"synced_punches":[],"failed_punches":["16_2026-02-16 10:13:31"]}}
+2026-02-16 16:01:23,193 - INFO - Synced: Employee 16 at 2026-02-16 10:13:31
+2026-02-16 16:01:23,303 - INFO - ERPNext Response for 8_2026-02-16 10:23:01: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["8_2026-02-16 10:23:01"],"failed_punches":[]}}
+2026-02-16 16:01:23,303 - INFO - Synced: Employee 8 at 2026-02-16 10:23:01
+2026-02-16 16:01:23,362 - INFO - ERPNext Response for 1_2026-02-16 13:05:23: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["1_2026-02-16 13:05:23"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-004 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:01:23,362 - INFO - Synced: Employee 1 at 2026-02-16 13:05:23
+2026-02-16 16:01:23,363 - INFO - Done: 11 synced, 0 errors
+2026-02-16 16:01:23,363 - INFO - ==================================================
+2026-02-16 16:04:13,481 - INFO - Logging started. Log file path: /home/raindrop/frappe-bench/apps/biometric_integration/k40_bridge/k40_bridge.log
+2026-02-16 16:04:13,481 - INFO - K40 Bridge Started!
+2026-02-16 16:04:13,481 - INFO - K40 Device: 192.168.18.200
+2026-02-16 16:04:13,481 - INFO - ERPNext URL: https://demo-sb.raindropinc.com
+2026-02-16 16:04:13,481 - INFO - Target date: 2026-02-16
+2026-02-16 16:04:13,481 - INFO - ==================================================
+2026-02-16 16:04:13,481 - INFO - Connecting to K40 at 192.168.18.200
+2026-02-16 16:04:13,546 - INFO - Connected! Disabling device...
+2026-02-16 16:04:13,563 - INFO - Fetching attendance records...
+2026-02-16 16:04:13,908 - INFO - Re-enabling device...
+2026-02-16 16:04:13,927 - INFO - Disconnecting...
+2026-02-16 16:04:13,940 - INFO - Retrieved 387 records from K40
+2026-02-16 16:04:13,941 - INFO - Found 11 records for 2026-02-16
+2026-02-16 16:04:14,013 - INFO - ERPNext Response for 14_2026-02-16 08:42:42: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["14_2026-02-16 08:42:42"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-037 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:04:14,013 - INFO - Synced: Employee 14 at 2026-02-16 08:42:42
+2026-02-16 16:04:14,074 - INFO - ERPNext Response for 5_2026-02-16 09:05:58: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-16 09:05:58"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-006 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:04:14,075 - INFO - Synced: Employee 5 at 2026-02-16 09:05:58
+2026-02-16 16:04:14,144 - INFO - ERPNext Response for 5_2026-02-16 09:05:59: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-16 09:05:59"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-006 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:04:14,144 - INFO - Synced: Employee 5 at 2026-02-16 09:05:59
+2026-02-16 16:04:14,196 - INFO - ERPNext Response for 9_2026-02-16 09:08:15: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["9_2026-02-16 09:08:15"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-040 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:04:14,197 - INFO - Synced: Employee 9 at 2026-02-16 09:08:15
+2026-02-16 16:04:14,251 - INFO - ERPNext Response for 7_2026-02-16 09:08:27: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-16 09:08:27"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-026 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:04:14,251 - INFO - Synced: Employee 7 at 2026-02-16 09:08:27
+2026-02-16 16:04:14,287 - INFO - ERPNext Response for 17_2026-02-16 09:18:42: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 17"],"synced_punches":[],"failed_punches":["17_2026-02-16 09:18:42"]}}
+2026-02-16 16:04:14,287 - INFO - Synced: Employee 17 at 2026-02-16 09:18:42
+2026-02-16 16:04:14,320 - INFO - ERPNext Response for 19_2026-02-16 09:36:24: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 19"],"synced_punches":[],"failed_punches":["19_2026-02-16 09:36:24"]}}
+2026-02-16 16:04:14,320 - INFO - Synced: Employee 19 at 2026-02-16 09:36:24
+2026-02-16 16:04:14,373 - INFO - ERPNext Response for 2_2026-02-16 09:59:51: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["2_2026-02-16 09:59:51"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-038 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:04:14,373 - INFO - Synced: Employee 2 at 2026-02-16 09:59:51
+2026-02-16 16:04:14,403 - INFO - ERPNext Response for 16_2026-02-16 10:13:31: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 16"],"synced_punches":[],"failed_punches":["16_2026-02-16 10:13:31"]}}
+2026-02-16 16:04:14,403 - INFO - Synced: Employee 16 at 2026-02-16 10:13:31
+2026-02-16 16:04:14,468 - INFO - ERPNext Response for 8_2026-02-16 10:23:01: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["8_2026-02-16 10:23:01"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-005 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:04:14,468 - INFO - Synced: Employee 8 at 2026-02-16 10:23:01
+2026-02-16 16:04:14,531 - INFO - ERPNext Response for 1_2026-02-16 13:05:23: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["1_2026-02-16 13:05:23"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-004 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:04:14,532 - INFO - Synced: Employee 1 at 2026-02-16 13:05:23
+2026-02-16 16:04:14,532 - INFO - Done: 11 synced, 0 errors
+2026-02-16 16:04:14,532 - INFO - ==================================================
+2026-02-16 16:05:42,166 - INFO - Logging started. Log file path: /home/raindrop/frappe-bench/apps/biometric_integration/k40_bridge/k40_bridge.log
+2026-02-16 16:05:42,166 - INFO - K40 Bridge Started!
+2026-02-16 16:05:42,166 - INFO - K40 Device: 192.168.18.200
+2026-02-16 16:05:42,166 - INFO - ERPNext URL: https://demo-sb.raindropinc.com
+2026-02-16 16:05:42,166 - INFO - Target date: 2026-02-16
+2026-02-16 16:05:42,166 - INFO - ==================================================
+2026-02-16 16:05:42,166 - INFO - Connecting to K40 at 192.168.18.200
+2026-02-16 16:05:42,237 - INFO - Connected! Disabling device...
+2026-02-16 16:05:42,253 - INFO - Fetching attendance records...
+2026-02-16 16:05:42,591 - INFO - Re-enabling device...
+2026-02-16 16:05:42,605 - INFO - Disconnecting...
+2026-02-16 16:05:42,620 - INFO - Retrieved 387 records from K40
+2026-02-16 16:05:42,620 - INFO - Found 11 records for 2026-02-16
+2026-02-16 16:05:42,686 - INFO - ERPNext Response for 14_2026-02-16 08:42:42: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["14_2026-02-16 08:42:42"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-037 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:05:42,686 - INFO - Synced: Employee 14 at 2026-02-16 08:42:42
+2026-02-16 16:05:42,754 - INFO - ERPNext Response for 5_2026-02-16 09:05:58: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-16 09:05:58"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-006 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:05:42,754 - INFO - Synced: Employee 5 at 2026-02-16 09:05:58
+2026-02-16 16:05:42,816 - INFO - ERPNext Response for 5_2026-02-16 09:05:59: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-16 09:05:59"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-006 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:05:42,817 - INFO - Synced: Employee 5 at 2026-02-16 09:05:59
+2026-02-16 16:05:42,869 - INFO - ERPNext Response for 9_2026-02-16 09:08:15: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["9_2026-02-16 09:08:15"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-040 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:05:42,869 - INFO - Synced: Employee 9 at 2026-02-16 09:08:15
+2026-02-16 16:05:42,924 - INFO - ERPNext Response for 7_2026-02-16 09:08:27: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-16 09:08:27"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-026 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:05:42,924 - INFO - Synced: Employee 7 at 2026-02-16 09:08:27
+2026-02-16 16:05:42,960 - INFO - ERPNext Response for 17_2026-02-16 09:18:42: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 17"],"synced_punches":[],"failed_punches":["17_2026-02-16 09:18:42"]}}
+2026-02-16 16:05:42,961 - INFO - Synced: Employee 17 at 2026-02-16 09:18:42
+2026-02-16 16:05:42,995 - INFO - ERPNext Response for 19_2026-02-16 09:36:24: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 19"],"synced_punches":[],"failed_punches":["19_2026-02-16 09:36:24"]}}
+2026-02-16 16:05:42,995 - INFO - Synced: Employee 19 at 2026-02-16 09:36:24
+2026-02-16 16:05:43,054 - INFO - ERPNext Response for 2_2026-02-16 09:59:51: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["2_2026-02-16 09:59:51"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-038 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:05:43,054 - INFO - Synced: Employee 2 at 2026-02-16 09:59:51
+2026-02-16 16:05:43,089 - INFO - ERPNext Response for 16_2026-02-16 10:13:31: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 16"],"synced_punches":[],"failed_punches":["16_2026-02-16 10:13:31"]}}
+2026-02-16 16:05:43,089 - INFO - Synced: Employee 16 at 2026-02-16 10:13:31
+2026-02-16 16:05:43,144 - INFO - ERPNext Response for 8_2026-02-16 10:23:01: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["8_2026-02-16 10:23:01"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-005 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:05:43,144 - INFO - Synced: Employee 8 at 2026-02-16 10:23:01
+2026-02-16 16:05:43,198 - INFO - ERPNext Response for 1_2026-02-16 13:05:23: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["1_2026-02-16 13:05:23"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-004 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:05:43,199 - INFO - Synced: Employee 1 at 2026-02-16 13:05:23
+2026-02-16 16:05:43,199 - INFO - Done: 11 synced, 0 errors
+2026-02-16 16:05:43,199 - INFO - ==================================================
+2026-02-16 16:06:28,842 - INFO - Logging started. Log file path: /home/raindrop/frappe-bench/apps/biometric_integration/k40_bridge/k40_bridge.log
+2026-02-16 16:06:28,845 - INFO - K40 Bridge Started!
+2026-02-16 16:06:28,845 - INFO - K40 Device: 192.168.18.200
+2026-02-16 16:06:28,845 - INFO - ERPNext URL: https://demo-sb.raindropinc.com
+2026-02-16 16:06:28,845 - INFO - Target date: 2026-02-01
+2026-02-16 16:06:28,845 - INFO - ==================================================
+2026-02-16 16:06:28,845 - INFO - Connecting to K40 at 192.168.18.200
+2026-02-16 16:06:28,912 - INFO - Connected! Disabling device...
+2026-02-16 16:06:28,925 - INFO - Fetching attendance records...
+2026-02-16 16:06:29,277 - INFO - Re-enabling device...
+2026-02-16 16:06:29,292 - INFO - Disconnecting...
+2026-02-16 16:06:29,306 - INFO - Retrieved 387 records from K40
+2026-02-16 16:06:29,306 - INFO - Found 25 records for 2026-02-01
+2026-02-16 16:06:29,398 - INFO - ERPNext Response for 14_2026-02-01 08:55:08: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["14_2026-02-01 08:55:08"],"failed_punches":[]}}
+2026-02-16 16:06:29,398 - INFO - Synced: Employee 14 at 2026-02-01 08:55:08
+2026-02-16 16:06:29,452 - INFO - ERPNext Response for 17_2026-02-01 09:02:10: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 17"],"synced_punches":[],"failed_punches":["17_2026-02-01 09:02:10"]}}
+2026-02-16 16:06:29,453 - INFO - Synced: Employee 17 at 2026-02-01 09:02:10
+2026-02-16 16:06:29,541 - INFO - ERPNext Response for 9_2026-02-01 09:08:17: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["9_2026-02-01 09:08:17"],"failed_punches":[]}}
+2026-02-16 16:06:29,541 - INFO - Synced: Employee 9 at 2026-02-01 09:08:17
+2026-02-16 16:06:29,628 - INFO - ERPNext Response for 7_2026-02-01 09:11:59: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-01 09:11:59"],"failed_punches":[]}}
+2026-02-16 16:06:29,628 - INFO - Synced: Employee 7 at 2026-02-01 09:11:59
+2026-02-16 16:06:29,668 - INFO - ERPNext Response for 18_2026-02-01 09:12:03: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 18"],"synced_punches":[],"failed_punches":["18_2026-02-01 09:12:03"]}}
+2026-02-16 16:06:29,668 - INFO - Synced: Employee 18 at 2026-02-01 09:12:03
+2026-02-16 16:06:29,699 - INFO - ERPNext Response for 18_2026-02-01 09:12:05: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 18"],"synced_punches":[],"failed_punches":["18_2026-02-01 09:12:05"]}}
+2026-02-16 16:06:29,700 - INFO - Synced: Employee 18 at 2026-02-01 09:12:05
+2026-02-16 16:06:29,760 - INFO - ERPNext Response for 2_2026-02-01 09:20:00: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["2_2026-02-01 09:20:00"],"failed_punches":[]}}
+2026-02-16 16:06:29,760 - INFO - Synced: Employee 2 at 2026-02-01 09:20:00
+2026-02-16 16:06:29,825 - INFO - ERPNext Response for 3_2026-02-01 09:26:04: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["3_2026-02-01 09:26:04"],"failed_punches":[]}}
+2026-02-16 16:06:29,825 - INFO - Synced: Employee 3 at 2026-02-01 09:26:04
+2026-02-16 16:06:29,892 - INFO - ERPNext Response for 3_2026-02-01 09:26:05: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["3_2026-02-01 09:26:05"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-027 on 01-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:06:29,892 - INFO - Synced: Employee 3 at 2026-02-01 09:26:05
+2026-02-16 16:06:29,954 - INFO - ERPNext Response for 5_2026-02-01 09:29:34: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-01 09:29:34"],"failed_punches":[]}}
+2026-02-16 16:06:29,954 - INFO - Synced: Employee 5 at 2026-02-01 09:29:34
+2026-02-16 16:06:30,018 - INFO - ERPNext Response for 10_2026-02-01 09:35:04: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["10_2026-02-01 09:35:04"],"failed_punches":[]}}
+2026-02-16 16:06:30,018 - INFO - Synced: Employee 10 at 2026-02-01 09:35:04
+2026-02-16 16:06:30,049 - INFO - ERPNext Response for 19_2026-02-01 09:47:03: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 19"],"synced_punches":[],"failed_punches":["19_2026-02-01 09:47:03"]}}
+2026-02-16 16:06:30,050 - INFO - Synced: Employee 19 at 2026-02-01 09:47:03
+2026-02-16 16:06:30,082 - INFO - ERPNext Response for 16_2026-02-01 10:11:01: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 16"],"synced_punches":[],"failed_punches":["16_2026-02-01 10:11:01"]}}
+2026-02-16 16:06:30,082 - INFO - Synced: Employee 16 at 2026-02-01 10:11:01
+2026-02-16 16:06:30,112 - INFO - ERPNext Response for 16_2026-02-01 17:19:37: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 16"],"synced_punches":[],"failed_punches":["16_2026-02-01 17:19:37"]}}
+2026-02-16 16:06:30,113 - INFO - Synced: Employee 16 at 2026-02-01 17:19:37
+2026-02-16 16:06:30,144 - INFO - ERPNext Response for 19_2026-02-01 17:32:29: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 19"],"synced_punches":[],"failed_punches":["19_2026-02-01 17:32:29"]}}
+2026-02-16 16:06:30,145 - INFO - Synced: Employee 19 at 2026-02-01 17:32:29
+2026-02-16 16:06:30,184 - INFO - ERPNext Response for 17_2026-02-01 17:49:22: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 17"],"synced_punches":[],"failed_punches":["17_2026-02-01 17:49:22"]}}
+2026-02-16 16:06:30,184 - INFO - Synced: Employee 17 at 2026-02-01 17:49:22
+2026-02-16 16:06:30,270 - INFO - ERPNext Response for 2_2026-02-01 17:57:55: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["2_2026-02-01 17:57:55"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-038 on 01-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:06:30,270 - INFO - Synced: Employee 2 at 2026-02-01 17:57:55
+2026-02-16 16:06:30,299 - INFO - ERPNext Response for 18_2026-02-01 17:58:05: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 18"],"synced_punches":[],"failed_punches":["18_2026-02-01 17:58:05"]}}
+2026-02-16 16:06:30,299 - INFO - Synced: Employee 18 at 2026-02-01 17:58:05
+2026-02-16 16:06:30,362 - INFO - ERPNext Response for 9_2026-02-01 18:06:11: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["9_2026-02-01 18:06:11"],"failed_punches":[]}}
+2026-02-16 16:06:30,363 - INFO - Synced: Employee 9 at 2026-02-01 18:06:11
+2026-02-16 16:06:30,423 - INFO - ERPNext Response for 7_2026-02-01 18:06:40: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-01 18:06:40"],"failed_punches":[]}}
+2026-02-16 16:06:30,423 - INFO - Synced: Employee 7 at 2026-02-01 18:06:40
+2026-02-16 16:06:30,491 - INFO - ERPNext Response for 14_2026-02-01 18:11:09: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["14_2026-02-01 18:11:09"],"failed_punches":[]}}
+2026-02-16 16:06:30,491 - INFO - Synced: Employee 14 at 2026-02-01 18:11:09
+2026-02-16 16:06:30,550 - INFO - ERPNext Response for 3_2026-02-01 18:32:04: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["3_2026-02-01 18:32:04"],"failed_punches":[]}}
+2026-02-16 16:06:30,550 - INFO - Synced: Employee 3 at 2026-02-01 18:32:04
+2026-02-16 16:06:30,617 - INFO - ERPNext Response for 5_2026-02-01 18:32:30: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-01 18:32:30"],"failed_punches":[]}}
+2026-02-16 16:06:30,617 - INFO - Synced: Employee 5 at 2026-02-01 18:32:30
+2026-02-16 16:06:30,682 - INFO - ERPNext Response for 8_2026-02-01 18:40:24: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["8_2026-02-01 18:40:24"],"failed_punches":[]}}
+2026-02-16 16:06:30,683 - INFO - Synced: Employee 8 at 2026-02-01 18:40:24
+2026-02-16 16:06:30,743 - INFO - ERPNext Response for 13_2026-02-01 20:16:00: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["13_2026-02-01 20:16:00"],"failed_punches":[]}}
+2026-02-16 16:06:30,743 - INFO - Synced: Employee 13 at 2026-02-01 20:16:00
+2026-02-16 16:06:30,743 - INFO - Done: 25 synced, 0 errors
+2026-02-16 16:06:30,743 - INFO - ==================================================
+2026-02-16 16:08:19,799 - INFO - Logging started. Log file path: /home/raindrop/frappe-bench/apps/biometric_integration/k40_bridge/k40_bridge.log
+2026-02-16 16:08:19,801 - INFO - K40 Bridge Started!
+2026-02-16 16:08:19,801 - INFO - K40 Device: 192.168.18.200
+2026-02-16 16:08:19,801 - INFO - ERPNext URL: https://demo-sb.raindropinc.com
+2026-02-16 16:08:19,801 - INFO - Target date: 2026-02-01
+2026-02-16 16:08:19,801 - INFO - ==================================================
+2026-02-16 16:08:19,801 - INFO - Connecting to K40 at 192.168.18.200
+2026-02-16 16:08:19,859 - INFO - Connected! Disabling device...
+2026-02-16 16:08:19,872 - INFO - Fetching attendance records...
+2026-02-16 16:08:20,219 - INFO - Re-enabling device...
+2026-02-16 16:08:20,243 - INFO - Disconnecting...
+2026-02-16 16:08:20,257 - INFO - Retrieved 389 records from K40
+2026-02-16 16:08:20,257 - INFO - Found 25 records for 2026-02-01
+2026-02-16 16:08:20,325 - INFO - ERPNext Response for 14_2026-02-01 08:55:08: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["14_2026-02-01 08:55:08"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-037 on 01-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:20,326 - INFO - Synced: Employee 14 at 2026-02-01 08:55:08
+2026-02-16 16:08:20,364 - INFO - ERPNext Response for 17_2026-02-01 09:02:10: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 17"],"synced_punches":[],"failed_punches":["17_2026-02-01 09:02:10"]}}
+2026-02-16 16:08:20,364 - INFO - Synced: Employee 17 at 2026-02-01 09:02:10
+2026-02-16 16:08:20,423 - INFO - ERPNext Response for 9_2026-02-01 09:08:17: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["9_2026-02-01 09:08:17"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-040 on 01-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:20,423 - INFO - Synced: Employee 9 at 2026-02-01 09:08:17
+2026-02-16 16:08:20,483 - INFO - ERPNext Response for 7_2026-02-01 09:11:59: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-01 09:11:59"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-026 on 01-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:20,483 - INFO - Synced: Employee 7 at 2026-02-01 09:11:59
+2026-02-16 16:08:20,517 - INFO - ERPNext Response for 18_2026-02-01 09:12:03: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 18"],"synced_punches":[],"failed_punches":["18_2026-02-01 09:12:03"]}}
+2026-02-16 16:08:20,517 - INFO - Synced: Employee 18 at 2026-02-01 09:12:03
+2026-02-16 16:08:20,546 - INFO - ERPNext Response for 18_2026-02-01 09:12:05: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 18"],"synced_punches":[],"failed_punches":["18_2026-02-01 09:12:05"]}}
+2026-02-16 16:08:20,546 - INFO - Synced: Employee 18 at 2026-02-01 09:12:05
+2026-02-16 16:08:20,607 - INFO - ERPNext Response for 2_2026-02-01 09:20:00: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["2_2026-02-01 09:20:00"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-038 on 01-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:20,607 - INFO - Synced: Employee 2 at 2026-02-01 09:20:00
+2026-02-16 16:08:20,676 - INFO - ERPNext Response for 3_2026-02-01 09:26:04: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["3_2026-02-01 09:26:04"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-027 on 01-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:20,677 - INFO - Synced: Employee 3 at 2026-02-01 09:26:04
+2026-02-16 16:08:20,745 - INFO - ERPNext Response for 3_2026-02-01 09:26:05: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["3_2026-02-01 09:26:05"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-027 on 01-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:20,745 - INFO - Synced: Employee 3 at 2026-02-01 09:26:05
+2026-02-16 16:08:20,808 - INFO - ERPNext Response for 5_2026-02-01 09:29:34: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-01 09:29:34"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-006 on 01-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:20,808 - INFO - Synced: Employee 5 at 2026-02-01 09:29:34
+2026-02-16 16:08:20,880 - INFO - ERPNext Response for 10_2026-02-01 09:35:04: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["10_2026-02-01 09:35:04"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-011 on 01-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:20,881 - INFO - Synced: Employee 10 at 2026-02-01 09:35:04
+2026-02-16 16:08:20,917 - INFO - ERPNext Response for 19_2026-02-01 09:47:03: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 19"],"synced_punches":[],"failed_punches":["19_2026-02-01 09:47:03"]}}
+2026-02-16 16:08:20,917 - INFO - Synced: Employee 19 at 2026-02-01 09:47:03
+2026-02-16 16:08:20,955 - INFO - ERPNext Response for 16_2026-02-01 10:11:01: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 16"],"synced_punches":[],"failed_punches":["16_2026-02-01 10:11:01"]}}
+2026-02-16 16:08:20,955 - INFO - Synced: Employee 16 at 2026-02-01 10:11:01
+2026-02-16 16:08:20,996 - INFO - ERPNext Response for 16_2026-02-01 17:19:37: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 16"],"synced_punches":[],"failed_punches":["16_2026-02-01 17:19:37"]}}
+2026-02-16 16:08:20,996 - INFO - Synced: Employee 16 at 2026-02-01 17:19:37
+2026-02-16 16:08:21,041 - INFO - ERPNext Response for 19_2026-02-01 17:32:29: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 19"],"synced_punches":[],"failed_punches":["19_2026-02-01 17:32:29"]}}
+2026-02-16 16:08:21,041 - INFO - Synced: Employee 19 at 2026-02-01 17:32:29
+2026-02-16 16:08:21,080 - INFO - ERPNext Response for 17_2026-02-01 17:49:22: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 17"],"synced_punches":[],"failed_punches":["17_2026-02-01 17:49:22"]}}
+2026-02-16 16:08:21,081 - INFO - Synced: Employee 17 at 2026-02-01 17:49:22
+2026-02-16 16:08:21,141 - INFO - ERPNext Response for 2_2026-02-01 17:57:55: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["2_2026-02-01 17:57:55"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-038 on 01-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:21,142 - INFO - Synced: Employee 2 at 2026-02-01 17:57:55
+2026-02-16 16:08:21,172 - INFO - ERPNext Response for 18_2026-02-01 17:58:05: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 18"],"synced_punches":[],"failed_punches":["18_2026-02-01 17:58:05"]}}
+2026-02-16 16:08:21,172 - INFO - Synced: Employee 18 at 2026-02-01 17:58:05
+2026-02-16 16:08:21,224 - INFO - ERPNext Response for 9_2026-02-01 18:06:11: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["9_2026-02-01 18:06:11"],"failed_punches":[]}}
+2026-02-16 16:08:21,224 - INFO - Synced: Employee 9 at 2026-02-01 18:06:11
+2026-02-16 16:08:21,283 - INFO - ERPNext Response for 7_2026-02-01 18:06:40: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-01 18:06:40"],"failed_punches":[]}}
+2026-02-16 16:08:21,283 - INFO - Synced: Employee 7 at 2026-02-01 18:06:40
+2026-02-16 16:08:21,340 - INFO - ERPNext Response for 14_2026-02-01 18:11:09: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["14_2026-02-01 18:11:09"],"failed_punches":[]}}
+2026-02-16 16:08:21,341 - INFO - Synced: Employee 14 at 2026-02-01 18:11:09
+2026-02-16 16:08:21,394 - INFO - ERPNext Response for 3_2026-02-01 18:32:04: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["3_2026-02-01 18:32:04"],"failed_punches":[]}}
+2026-02-16 16:08:21,394 - INFO - Synced: Employee 3 at 2026-02-01 18:32:04
+2026-02-16 16:08:21,448 - INFO - ERPNext Response for 5_2026-02-01 18:32:30: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-01 18:32:30"],"failed_punches":[]}}
+2026-02-16 16:08:21,448 - INFO - Synced: Employee 5 at 2026-02-01 18:32:30
+2026-02-16 16:08:21,510 - INFO - ERPNext Response for 8_2026-02-01 18:40:24: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["8_2026-02-01 18:40:24"],"failed_punches":[]}}
+2026-02-16 16:08:21,511 - INFO - Synced: Employee 8 at 2026-02-01 18:40:24
+2026-02-16 16:08:21,575 - INFO - ERPNext Response for 13_2026-02-01 20:16:00: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["13_2026-02-01 20:16:00"],"failed_punches":[]}}
+2026-02-16 16:08:21,575 - INFO - Synced: Employee 13 at 2026-02-01 20:16:00
+2026-02-16 16:08:21,576 - INFO - Done: 25 synced, 0 errors
+2026-02-16 16:08:21,576 - INFO - ==================================================
+2026-02-16 16:08:24,572 - INFO - Logging started. Log file path: /home/raindrop/frappe-bench/apps/biometric_integration/k40_bridge/k40_bridge.log
+2026-02-16 16:08:24,572 - INFO - K40 Bridge Started!
+2026-02-16 16:08:24,572 - INFO - K40 Device: 192.168.18.200
+2026-02-16 16:08:24,572 - INFO - ERPNext URL: https://demo-sb.raindropinc.com
+2026-02-16 16:08:24,572 - INFO - Target date: 2026-02-16
+2026-02-16 16:08:24,572 - INFO - ==================================================
+2026-02-16 16:08:24,572 - INFO - Connecting to K40 at 192.168.18.200
+2026-02-16 16:08:24,644 - INFO - Connected! Disabling device...
+2026-02-16 16:08:24,660 - INFO - Fetching attendance records...
+2026-02-16 16:08:24,989 - INFO - Re-enabling device...
+2026-02-16 16:08:25,004 - INFO - Disconnecting...
+2026-02-16 16:08:25,019 - INFO - Retrieved 389 records from K40
+2026-02-16 16:08:25,019 - INFO - Found 13 records for 2026-02-16
+2026-02-16 16:08:25,083 - INFO - ERPNext Response for 14_2026-02-16 08:42:42: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["14_2026-02-16 08:42:42"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-037 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:25,083 - INFO - Synced: Employee 14 at 2026-02-16 08:42:42
+2026-02-16 16:08:25,145 - INFO - ERPNext Response for 5_2026-02-16 09:05:58: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-16 09:05:58"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-006 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:25,145 - INFO - Synced: Employee 5 at 2026-02-16 09:05:58
+2026-02-16 16:08:25,205 - INFO - ERPNext Response for 5_2026-02-16 09:05:59: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-16 09:05:59"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-006 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:25,205 - INFO - Synced: Employee 5 at 2026-02-16 09:05:59
+2026-02-16 16:08:25,259 - INFO - ERPNext Response for 9_2026-02-16 09:08:15: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["9_2026-02-16 09:08:15"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-040 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:25,259 - INFO - Synced: Employee 9 at 2026-02-16 09:08:15
+2026-02-16 16:08:25,311 - INFO - ERPNext Response for 7_2026-02-16 09:08:27: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-16 09:08:27"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-026 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:25,311 - INFO - Synced: Employee 7 at 2026-02-16 09:08:27
+2026-02-16 16:08:25,343 - INFO - ERPNext Response for 17_2026-02-16 09:18:42: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 17"],"synced_punches":[],"failed_punches":["17_2026-02-16 09:18:42"]}}
+2026-02-16 16:08:25,343 - INFO - Synced: Employee 17 at 2026-02-16 09:18:42
+2026-02-16 16:08:25,374 - INFO - ERPNext Response for 19_2026-02-16 09:36:24: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 19"],"synced_punches":[],"failed_punches":["19_2026-02-16 09:36:24"]}}
+2026-02-16 16:08:25,375 - INFO - Synced: Employee 19 at 2026-02-16 09:36:24
+2026-02-16 16:08:25,429 - INFO - ERPNext Response for 2_2026-02-16 09:59:51: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["2_2026-02-16 09:59:51"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-038 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:25,429 - INFO - Synced: Employee 2 at 2026-02-16 09:59:51
+2026-02-16 16:08:25,458 - INFO - ERPNext Response for 16_2026-02-16 10:13:31: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 16"],"synced_punches":[],"failed_punches":["16_2026-02-16 10:13:31"]}}
+2026-02-16 16:08:25,458 - INFO - Synced: Employee 16 at 2026-02-16 10:13:31
+2026-02-16 16:08:25,510 - INFO - ERPNext Response for 8_2026-02-16 10:23:01: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["8_2026-02-16 10:23:01"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-005 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:25,510 - INFO - Synced: Employee 8 at 2026-02-16 10:23:01
+2026-02-16 16:08:25,560 - INFO - ERPNext Response for 1_2026-02-16 13:05:23: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["1_2026-02-16 13:05:23"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-004 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:25,561 - INFO - Synced: Employee 1 at 2026-02-16 13:05:23
+2026-02-16 16:08:25,631 - INFO - ERPNext Response for 7_2026-02-16 16:08:10: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-16 16:08:10"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-026 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:25,631 - INFO - Synced: Employee 7 at 2026-02-16 16:08:10
+2026-02-16 16:08:25,692 - INFO - ERPNext Response for 7_2026-02-16 16:08:18: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-16 16:08:18"],"failed_punches":[]},"_server_messages":"[\"{\\\"message\\\": \\\"No leave record found for employee EMP-R-026 on 16-02-2026\\\", \\\"title\\\": \\\"Message\\\", \\\"alert\\\": 1}\"]"}
+2026-02-16 16:08:25,692 - INFO - Synced: Employee 7 at 2026-02-16 16:08:18
+2026-02-16 16:08:25,693 - INFO - Done: 13 synced, 0 errors
+2026-02-16 16:08:25,693 - INFO - ==================================================
