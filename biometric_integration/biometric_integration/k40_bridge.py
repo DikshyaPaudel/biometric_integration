@@ -23,7 +23,7 @@ K40_IP = '192.168.18.200'
 K40_PORT = 4370
 K40_SERIAL = 'A6F5215360564'
 
-ERPNEXT_URL = 'http://sandboxsarathi.raindropinc.com'
+ERPNEXT_URL = 'https://demo-sb.raindropinc.com'
 API_PATH = '/api/method/biometric_integration.biometric_integration.biometric_integration.push_bulk_attendance'
 
 SYNC_INTERVAL = 1800  # 30 minutes in seconds
@@ -214,11 +214,13 @@ def sync_cycle():
 
 def is_within_time_window():
     """Check if current time falls within any configured time window."""
-    now = datetime.now().strftime('%H:%M')
-    for window in TIME_WINDOWS:
-        if window["start"] <= now <= window["end"]:
-            return True, window["end"]
-    return False, None
+    # TEMP: disabled time window for testing — always allow
+    return True, "23:59"
+    # now = datetime.now().strftime('%H:%M')
+    # for window in TIME_WINDOWS:
+    #     if window["start"] <= now <= window["end"]:
+    #         return True, window["end"]
+    # return False, None
 
 
 def main():
