@@ -5,6 +5,7 @@ Pulls attendance from K40 device and pushes to ERPNext
 """
 #bench --site your-site-name execute biometric_integration.biometric_integration.utils.create_attendance_from_checkins --kwargs "{'date': '2026-02-11'}"                                     
 
+import sys
 import time
 import logging
 import json
@@ -166,7 +167,13 @@ def sync_cycle():
     # Get attendance from K40
     attendances = get_attendance_from_k40()
 
-    today_date = date.today()
+    # today_date = date.today()
+    # today_date = date(2026, 2, 15)
+    if len(sys.argv) > 1:
+        today_date = datetime.strptime(sys.argv[1], "%Y-%m-%d").date()
+    else:
+        today_date = date.today()
+
     # Only today
     attendances = [att for att in attendances if att.timestamp.date() == today_date]
 

@@ -72,26 +72,38 @@ def process_attendance_records(attendance_data, device_identifier=None):
                 continue
 
             timestamps.sort()
-            first_punch = timestamps[0]
             last_punch = timestamps[-1]
 
-            # Create/update IN checkin (always the first punch)
-            _upsert_checkin_in(employee, punch_date, first_punch, device_identifier)
+            # Check if IN already exists in DB for this employee+date
+            day_start = datetime.combine(punch_date, datetime.min.time())
+            day_end = datetime.combine(punch_date, datetime.max.time())
+            existing_in = frappe.db.get_value(
+                "Employee Checkin",
+                {
+                    "employee": employee.name,
+                    "log_type": "IN",
+                    "time": ["between", [day_start, day_end]],
+                },
+                ["name", "time"],
+                as_dict=True,
+            )
 
-            # Create/update OUT checkin only when there are multiple punches
-            if len(timestamps) > 1:
+            if existing_in:
+                # IN exists — this punch updates OUT
                 _upsert_checkin_out(employee, punch_date, last_punch, device_identifier)
-
-            # Create/update draft Attendance
-            out_time = last_punch if len(timestamps) > 1 else None
-            _upsert_attendance(employee, punch_date, first_punch, out_time)
+                _upsert_attendance(employee, punch_date, existing_in.time, last_punch)
+            else:
+                # No IN — first punch is IN
+                _upsert_checkin_in(employee, punch_date, timestamps[0], device_identifier)
+                _upsert_attendance(employee, punch_date, timestamps[0], None)
 
             synced += len(timestamps)
             synced_punches.extend(group_record_ids)
 
             frappe.logger("biometric").info(
                 f"Processed {employee.name} on {punch_date}: "
-                f"IN={first_punch}, OUT={last_punch if len(timestamps) > 1 else 'N/A'}, "
+                f"IN={existing_in.time if existing_in else timestamps[0]}, "
+                f"OUT={last_punch if existing_in else 'N/A'}, "
                 f"punches={len(timestamps)}"
             )
 
