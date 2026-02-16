@@ -16,21 +16,17 @@ import requests
 # CONFIGURATION
 # ============================================
 K40_IP = '192.168.18.200'
-K40_PORT = 4370
 K40_SERIAL = 'A6F5215360564'
 
 ERPNEXT_URL = 'https://demo-sb.raindropinc.com'
 WEBHOOK_PATH = '/api/method/biometric_integration.biometric_integration.biometric_integration.zkteco_push_attendance'
 
-# Log file on Windows Desktop
-DESKTOP = os.path.join(os.path.expanduser("~"), "Desktop")
-LOG_FILE = os.path.join(DESKTOP, "k40_bridge.log")
+# Log file — same folder as the exe
+LOG_FILE = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), "k40_bridge.log")
 
 # ============================================
 # SETUP LOGGING
 # ============================================
-os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
-
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -46,8 +42,8 @@ logger = logging.getLogger(__name__)
 def get_attendance_from_k40():
     """Connect to K40 and retrieve attendance records"""
     try:
-        logger.info(f"Connecting to K40 at {K40_IP}:{K40_PORT}")
-        conn = ZK(K40_IP, port=K40_PORT, timeout=5)
+        logger.info(f"Connecting to K40 at {K40_IP}")
+        conn = ZK(K40_IP, timeout=5)
         zk = conn.connect()
 
         zk.disable_device()
