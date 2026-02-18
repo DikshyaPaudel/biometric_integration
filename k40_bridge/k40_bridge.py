@@ -119,7 +119,7 @@ def main():
     logger.info("="*50)
 
     # Get attendance from K40
-    attendances = get_attendance_from_k40()
+    # attendances = get_attendance_from_k40()
 
     # Filter to target date only
     attendances = [att for att in attendances if att.timestamp.date() == target_date]
@@ -127,7 +127,7 @@ def main():
     if not attendances:
         logger.info("No records for this date")
         return
-        return
+        
 
     logger.info(f"Found {len(attendances)} records for {target_date}")
 

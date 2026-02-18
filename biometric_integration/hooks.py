@@ -137,25 +137,16 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+    "Attendance": {
+        "before_save": "biometric_integration.biometric_integration.attendance_override.cap_working_hours_to_shift_end",
+        "on_submit": "biometric_integration.biometric_integration.attendance_override.create_compensatory_leave_on_holiday",
+    }
+}
 
 # Scheduled Tasks
 # ---------------
-# Nightly at 23:58 — submit draft Attendance and mark absent employees
-scheduler_events = {
-    "cron": {
-        "58 23 * * *": [
-            "biometric_integration.biometric_integration.utils.submit_draft_attendance",
-            "biometric_integration.biometric_integration.utils.mark_absent_employees",
-        ]
-    }
-}
+# Attendance is handled by ERPNext's built-in auto attendance (Shift Type → Enable Auto Attendance)
 
 # Testing
 # -------

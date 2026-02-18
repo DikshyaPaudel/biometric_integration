@@ -1,13 +1,14 @@
 import frappe
 from frappe.utils import now_datetime
-from datetime import datetime, timedelta
+from datetime import datetime
 from collections import defaultdict
 
 
 def process_attendance_records(attendance_data, device_identifier=None):
     """
     Process biometric punch records: group by (user_id, date), then create/update
-    exactly one IN checkin, one OUT checkin, and one draft Attendance per employee per day.
+    exactly one IN checkin and one OUT checkin per employee per day.
+    Attendance is handled by ERPNext's built-in auto attendance.
 
     Args:
         attendance_data: list of {"user_id": str, "timestamp": str} dicts
@@ -91,11 +92,9 @@ def process_attendance_records(attendance_data, device_identifier=None):
             if existing_in:
                 # IN exists — this punch updates OUT
                 _upsert_checkin_out(employee, punch_date, last_punch, device_identifier)
-                _upsert_attendance(employee, punch_date, existing_in.time, last_punch)
             else:
                 # No IN — first punch is IN
                 _upsert_checkin_in(employee, punch_date, timestamps[0], device_identifier)
-                _upsert_attendance(employee, punch_date, timestamps[0], None)
 
             synced += len(timestamps)
             synced_punches.extend(group_record_ids)
@@ -154,7 +153,7 @@ def _upsert_checkin_in(employee, punch_date, in_time, device_identifier=None):
     checkin.employee_name = employee.employee_name
     checkin.time = in_time
     checkin.log_type = "IN"
-    checkin.skip_auto_attendance = 1
+    checkin.skip_auto_attendance = 0
     checkin.latitude = 27.7228
     checkin.longitude = 85.3211
     if device_identifier:
@@ -188,236 +187,12 @@ def _upsert_checkin_out(employee, punch_date, out_time, device_identifier=None):
     checkin.employee_name = employee.employee_name
     checkin.time = out_time
     checkin.log_type = "OUT"
-    checkin.skip_auto_attendance = 1
+    checkin.skip_auto_attendance = 0
     checkin.latitude = 27.7228
     checkin.longitude = 85.3211
     if device_identifier:
         checkin.device_id = device_identifier
     checkin.insert(ignore_permissions=True)
-
-
-def _upsert_attendance(employee, punch_date, in_time, out_time=None):
-    """
-    Create or update a draft Attendance for the employee on punch_date.
-    If a submitted (docstatus=1) Attendance exists, skip.
-    If a draft (docstatus=0) exists, update it.
-    Otherwise create a new draft.
-    """
-    # Check for submitted attendance — do not touch it
-    submitted = frappe.db.exists(
-        "Attendance",
-        {
-            "employee": employee.name,
-            "attendance_date": punch_date,
-            "docstatus": 1,
-        },
-    )
-    if submitted:
-        return
-
-    # Calculate working hours
-    working_hours = 0
-    if in_time and out_time:
-        working_hours = round((out_time - in_time).total_seconds() / 3600, 2)
-
-    # Calculate late entry / early exit
-    late_entry, early_exit = _calculate_late_early(employee, in_time, out_time)
-
-    if early_exit:
-        status = "Half Day"
-        leave_type = "Leave Without Pay"
-    else:
-        status = "Present"
-        leave_type = ""
-
-    att_data = {
-        "employee": employee.name,
-        "employee_name": employee.employee_name,
-        "attendance_date": punch_date,
-        "company": employee.company,
-        "in_time": in_time,
-        "out_time": out_time,
-        "working_hours": working_hours,
-        "status": status,
-        "late_entry": late_entry,
-        "early_exit": early_exit,
-    }
-    if employee.default_shift:
-        att_data["shift"] = employee.default_shift
-    if leave_type:
-        att_data["leave_type"] = leave_type
-
-    # Check for existing draft
-    draft = frappe.db.exists(
-        "Attendance",
-        {
-            "employee": employee.name,
-            "attendance_date": punch_date,
-            "docstatus": 0,
-        },
-    )
-
-    if draft:
-        doc = frappe.get_doc("Attendance", draft)
-        doc.update(att_data)
-        doc.save(ignore_permissions=True)
-    else:
-        att = frappe.new_doc("Attendance")
-        att.update(att_data)
-        att.insert(ignore_permissions=True)
-
-
-def _calculate_late_early(employee, in_time, out_time=None):
-    """
-    Determine late_entry and early_exit using the employee's Shift Type
-    grace periods.
-
-    Returns:
-        (late_entry: bool, early_exit: bool)
-    """
-    late_entry = False
-    early_exit = False
-
-    if not employee.default_shift:
-        return late_entry, early_exit
-
-    shift = frappe.db.get_value(
-        "Shift Type",
-        employee.default_shift,
-        [
-            "start_time",
-            "end_time",
-            "enable_late_entry_marking",
-            "late_entry_grace_period",
-            "enable_early_exit_marking",
-            "early_exit_grace_period",
-        ],
-        as_dict=True,
-    )
-
-    if not shift:
-        return late_entry, early_exit
-
-    # shift.start_time and shift.end_time are timedelta objects
-    # Convert in_time / out_time to timedelta for comparison
-    in_td = timedelta(hours=in_time.hour, minutes=in_time.minute, seconds=in_time.second)
-
-    if shift.enable_late_entry_marking:
-        grace = timedelta(minutes=shift.late_entry_grace_period or 0)
-        if in_td > shift.start_time + grace:
-            late_entry = True
-
-    if out_time and shift.enable_early_exit_marking:
-        out_td = timedelta(hours=out_time.hour, minutes=out_time.minute, seconds=out_time.second)
-        grace = timedelta(minutes=shift.early_exit_grace_period or 0)
-        if out_td < shift.end_time - grace:
-            early_exit = True
-
-    return late_entry, early_exit
-
-
-def submit_draft_attendance(date=None):
-    """
-    Nightly job: submit all draft Attendance records for the given date (default today).
-    """
-    from frappe.utils import getdate, today
-
-    target_date = getdate(date) if date else getdate(today())
-
-    drafts = frappe.get_all(
-        "Attendance",
-        filters={
-            "attendance_date": target_date,
-            "docstatus": 0,
-        },
-        pluck="name",
-    )
-
-    submitted = 0
-    errors = 0
-
-    for att_name in drafts:
-        try:
-            doc = frappe.get_doc("Attendance", att_name)
-            doc.submit()
-            submitted += 1
-        except Exception as e:
-            errors += 1
-            frappe.log_error(
-                title="Attendance Submit Error",
-                message=f"Attendance: {att_name}\nDate: {target_date}\nError: {str(e)}",
-            )
-
-    frappe.db.commit()
-
-    frappe.logger("biometric").info(
-        f"Submit drafts: submitted={submitted} errors={errors} for {target_date}"
-    )
-
-    return {"submitted": submitted, "errors": errors}
-
-
-def mark_absent_employees(date=None):
-    """
-    Nightly job: for all Active employees without any Attendance for the date,
-    create and submit an Absent attendance record.
-    """
-    from frappe.utils import getdate, today
-
-    target_date = getdate(date) if date else getdate(today())
-
-    # Get all active employees
-    all_active = frappe.get_all(
-        "Employee",
-        filters={"status": "Active"},
-        fields=["name", "employee_name", "company", "default_shift"],
-    )
-
-    # Get employees who already have attendance for the date
-    employees_with_attendance = frappe.get_all(
-        "Attendance",
-        filters={
-            "attendance_date": target_date,
-            "docstatus": ["!=", 2],
-        },
-        pluck="employee",
-    )
-    employees_with_attendance = set(employees_with_attendance)
-
-    marked = 0
-    errors = 0
-
-    for emp in all_active:
-        if emp.name in employees_with_attendance:
-            continue
-
-        try:
-            att = frappe.new_doc("Attendance")
-            att.employee = emp.name
-            att.employee_name = emp.employee_name
-            att.attendance_date = target_date
-            att.company = emp.company
-            att.status = "Absent"
-            if emp.default_shift:
-                att.shift = emp.default_shift
-            att.insert(ignore_permissions=True)
-            att.submit()
-            marked += 1
-        except Exception as e:
-            errors += 1
-            frappe.log_error(
-                title="Mark Absent Error",
-                message=f"Employee: {emp.name}\nDate: {target_date}\nError: {str(e)}",
-            )
-
-    frappe.db.commit()
-
-    frappe.logger("biometric").info(
-        f"Mark absent: marked={marked} errors={errors} for {target_date}"
-    )
-
-    return {"marked": marked, "errors": errors}
-
 
 
 def _parse_timestamp(timestamp_str):
