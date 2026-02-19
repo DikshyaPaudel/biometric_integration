@@ -2332,3 +2332,98 @@
 2026-02-19 09:35:50,559 - INFO - Synced: Employee 4 at 2026-02-19 09:33:26
 2026-02-19 09:35:50,559 - INFO - Done: 7 synced, 0 errors
 2026-02-19 09:35:50,559 - INFO - ==================================================
+2026-02-19 09:48:59,644 - INFO - Logging started. Log file path: /home/raindrop/frappe-bench/apps/biometric_integration/k40_bridge/k40_bridge.log
+2026-02-19 09:48:59,644 - INFO - K40 Bridge Started!
+2026-02-19 09:48:59,645 - INFO - K40 Device: 192.168.18.200
+2026-02-19 09:48:59,645 - INFO - ERPNext URL: https://demo-sb.raindropinc.com
+2026-02-19 09:48:59,645 - INFO - Target date: 2026-02-19
+2026-02-19 09:48:59,645 - INFO - ==================================================
+2026-02-19 09:48:59,645 - INFO - Connecting to K40 at 192.168.18.200
+2026-02-19 09:48:59,704 - INFO - Connected! Disabling device...
+2026-02-19 09:48:59,717 - INFO - Fetching attendance records...
+2026-02-19 09:49:00,060 - INFO - Re-enabling device...
+2026-02-19 09:49:00,085 - INFO - Disconnecting...
+2026-02-19 09:49:00,101 - INFO - Retrieved 451 records from K40
+2026-02-19 09:49:00,101 - INFO - Found 8 records for 2026-02-19
+2026-02-19 09:49:00,222 - INFO - ERPNext Response for 5_2026-02-19 08:54:07: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-19 08:54:07"],"failed_punches":[]}}
+2026-02-19 09:49:00,222 - INFO - Synced: Employee 5 at 2026-02-19 08:54:07
+2026-02-19 09:49:00,261 - INFO - ERPNext Response for 17_2026-02-19 08:57:29: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 17"],"synced_punches":[],"failed_punches":["17_2026-02-19 08:57:29"]}}
+2026-02-19 09:49:00,261 - INFO - Synced: Employee 17 at 2026-02-19 08:57:29
+2026-02-19 09:49:00,311 - INFO - ERPNext Response for 6_2026-02-19 08:57:56: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["6_2026-02-19 08:57:56"],"failed_punches":[]}}
+2026-02-19 09:49:00,311 - INFO - Synced: Employee 6 at 2026-02-19 08:57:56
+2026-02-19 09:49:00,363 - INFO - ERPNext Response for 7_2026-02-19 09:10:27: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-19 09:10:27"],"failed_punches":[]}}
+2026-02-19 09:49:00,363 - INFO - Synced: Employee 7 at 2026-02-19 09:10:27
+2026-02-19 09:49:00,416 - INFO - ERPNext Response for 3_2026-02-19 09:31:39: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["3_2026-02-19 09:31:39"],"failed_punches":[]}}
+2026-02-19 09:49:00,416 - INFO - Synced: Employee 3 at 2026-02-19 09:31:39
+2026-02-19 09:49:00,467 - INFO - ERPNext Response for 1_2026-02-19 09:33:17: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["1_2026-02-19 09:33:17"],"failed_punches":[]}}
+2026-02-19 09:49:00,468 - INFO - Synced: Employee 1 at 2026-02-19 09:33:17
+2026-02-19 09:49:00,535 - INFO - ERPNext Response for 4_2026-02-19 09:33:26: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["4_2026-02-19 09:33:26"],"failed_punches":[]}}
+2026-02-19 09:49:00,535 - INFO - Synced: Employee 4 at 2026-02-19 09:33:26
+2026-02-19 09:49:00,610 - INFO - ERPNext Response for 7_2026-02-19 09:47:48: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-19 09:47:48"],"failed_punches":[]}}
+2026-02-19 09:49:00,610 - INFO - Synced: Employee 7 at 2026-02-19 09:47:48
+2026-02-19 09:49:00,610 - INFO - Done: 8 synced, 0 errors
+2026-02-19 09:49:00,610 - INFO - ==================================================
+2026-02-19 09:50:45,286 - INFO - Logging started. Log file path: /home/raindrop/frappe-bench/apps/biometric_integration/k40_bridge/k40_bridge.log
+2026-02-19 09:50:45,286 - INFO - K40 Bridge Started!
+2026-02-19 09:50:45,286 - INFO - K40 Device: 192.168.18.200
+2026-02-19 09:50:45,286 - INFO - ERPNext URL: https://demo-sb.raindropinc.com
+2026-02-19 09:50:45,286 - INFO - Target date: 2026-02-19
+2026-02-19 09:50:45,286 - INFO - ==================================================
+2026-02-19 09:50:45,286 - INFO - Connecting to K40 at 192.168.18.200
+2026-02-19 09:50:45,353 - INFO - Connected! Disabling device...
+2026-02-19 09:50:45,367 - INFO - Fetching attendance records...
+2026-02-19 09:50:45,755 - INFO - Re-enabling device...
+2026-02-19 09:50:45,777 - INFO - Disconnecting...
+2026-02-19 09:50:45,792 - INFO - Retrieved 451 records from K40
+2026-02-19 09:50:45,792 - INFO - Found 8 records for 2026-02-19
+2026-02-19 09:50:45,841 - INFO - ERPNext Response for 5_2026-02-19 08:54:07: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-19 08:54:07"],"failed_punches":[]}}
+2026-02-19 09:50:45,841 - INFO - Synced: Employee 5 at 2026-02-19 08:54:07
+2026-02-19 09:50:45,878 - INFO - ERPNext Response for 17_2026-02-19 08:57:29: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 17"],"synced_punches":[],"failed_punches":["17_2026-02-19 08:57:29"]}}
+2026-02-19 09:50:45,879 - INFO - Synced: Employee 17 at 2026-02-19 08:57:29
+2026-02-19 09:50:45,913 - INFO - ERPNext Response for 6_2026-02-19 08:57:56: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["6_2026-02-19 08:57:56"],"failed_punches":[]}}
+2026-02-19 09:50:45,914 - INFO - Synced: Employee 6 at 2026-02-19 08:57:56
+2026-02-19 09:50:45,971 - INFO - ERPNext Response for 7_2026-02-19 09:10:27: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-19 09:10:27"],"failed_punches":[]}}
+2026-02-19 09:50:45,972 - INFO - Synced: Employee 7 at 2026-02-19 09:10:27
+2026-02-19 09:50:46,009 - INFO - ERPNext Response for 3_2026-02-19 09:31:39: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["3_2026-02-19 09:31:39"],"failed_punches":[]}}
+2026-02-19 09:50:46,009 - INFO - Synced: Employee 3 at 2026-02-19 09:31:39
+2026-02-19 09:50:46,045 - INFO - ERPNext Response for 1_2026-02-19 09:33:17: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["1_2026-02-19 09:33:17"],"failed_punches":[]}}
+2026-02-19 09:50:46,046 - INFO - Synced: Employee 1 at 2026-02-19 09:33:17
+2026-02-19 09:50:46,081 - INFO - ERPNext Response for 4_2026-02-19 09:33:26: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["4_2026-02-19 09:33:26"],"failed_punches":[]}}
+2026-02-19 09:50:46,081 - INFO - Synced: Employee 4 at 2026-02-19 09:33:26
+2026-02-19 09:50:46,120 - INFO - ERPNext Response for 7_2026-02-19 09:47:48: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-19 09:47:48"],"failed_punches":[]}}
+2026-02-19 09:50:46,120 - INFO - Synced: Employee 7 at 2026-02-19 09:47:48
+2026-02-19 09:50:46,121 - INFO - Done: 8 synced, 0 errors
+2026-02-19 09:50:46,121 - INFO - ==================================================
+2026-02-19 10:17:49,161 - INFO - Logging started. Log file path: /home/raindrop/frappe-bench/apps/biometric_integration/k40_bridge/k40_bridge.log
+2026-02-19 10:17:49,161 - INFO - K40 Bridge Started!
+2026-02-19 10:17:49,161 - INFO - K40 Device: 192.168.18.200
+2026-02-19 10:17:49,161 - INFO - ERPNext URL: https://demo-sb.raindropinc.com
+2026-02-19 10:17:49,161 - INFO - Target date: 2026-02-19
+2026-02-19 10:17:49,161 - INFO - ==================================================
+2026-02-19 10:17:49,161 - INFO - Connecting to K40 at 192.168.18.200
+2026-02-19 10:17:49,240 - INFO - Connected! Disabling device...
+2026-02-19 10:17:49,256 - INFO - Fetching attendance records...
+2026-02-19 10:17:49,604 - INFO - Re-enabling device...
+2026-02-19 10:17:49,627 - INFO - Disconnecting...
+2026-02-19 10:17:49,642 - INFO - Retrieved 452 records from K40
+2026-02-19 10:17:49,642 - INFO - Found 9 records for 2026-02-19
+2026-02-19 10:17:49,702 - INFO - ERPNext Response for 5_2026-02-19 08:54:07: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-19 08:54:07"],"failed_punches":[]}}
+2026-02-19 10:17:49,702 - INFO - Synced: Employee 5 at 2026-02-19 08:54:07
+2026-02-19 10:17:49,734 - INFO - ERPNext Response for 17_2026-02-19 08:57:29: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 17"],"synced_punches":[],"failed_punches":["17_2026-02-19 08:57:29"]}}
+2026-02-19 10:17:49,734 - INFO - Synced: Employee 17 at 2026-02-19 08:57:29
+2026-02-19 10:17:49,780 - INFO - ERPNext Response for 6_2026-02-19 08:57:56: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["6_2026-02-19 08:57:56"],"failed_punches":[]}}
+2026-02-19 10:17:49,780 - INFO - Synced: Employee 6 at 2026-02-19 08:57:56
+2026-02-19 10:17:49,838 - INFO - ERPNext Response for 7_2026-02-19 09:10:27: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-19 09:10:27"],"failed_punches":[]}}
+2026-02-19 10:17:49,838 - INFO - Synced: Employee 7 at 2026-02-19 09:10:27
+2026-02-19 10:17:49,874 - INFO - ERPNext Response for 3_2026-02-19 09:31:39: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["3_2026-02-19 09:31:39"],"failed_punches":[]}}
+2026-02-19 10:17:49,874 - INFO - Synced: Employee 3 at 2026-02-19 09:31:39
+2026-02-19 10:17:49,907 - INFO - ERPNext Response for 1_2026-02-19 09:33:17: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["1_2026-02-19 09:33:17"],"failed_punches":[]}}
+2026-02-19 10:17:49,907 - INFO - Synced: Employee 1 at 2026-02-19 09:33:17
+2026-02-19 10:17:49,938 - INFO - ERPNext Response for 4_2026-02-19 09:33:26: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["4_2026-02-19 09:33:26"],"failed_punches":[]}}
+2026-02-19 10:17:49,938 - INFO - Synced: Employee 4 at 2026-02-19 09:33:26
+2026-02-19 10:17:49,980 - INFO - ERPNext Response for 7_2026-02-19 09:47:48: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-19 09:47:48"],"failed_punches":[]}}
+2026-02-19 10:17:49,980 - INFO - Synced: Employee 7 at 2026-02-19 09:47:48
+2026-02-19 10:17:50,009 - INFO - ERPNext Response for 16_2026-02-19 09:56:40: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 16"],"synced_punches":[],"failed_punches":["16_2026-02-19 09:56:40"]}}
+2026-02-19 10:17:50,009 - INFO - Synced: Employee 16 at 2026-02-19 09:56:40
+2026-02-19 10:17:50,009 - INFO - Done: 9 synced, 0 errors
+2026-02-19 10:17:50,009 - INFO - ==================================================

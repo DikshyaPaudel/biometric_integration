@@ -89,12 +89,13 @@ def process_attendance_records(attendance_data, device_identifier=None):
                 as_dict=True,
             )
 
-            if existing_in:
-                # IN exists — this punch updates OUT
-                _upsert_checkin_out(employee, punch_date, last_punch, device_identifier)
-            else:
-                # No IN — first punch is IN
+            if not existing_in:
+                # No IN yet — create IN with first punch
                 _upsert_checkin_in(employee, punch_date, timestamps[0], device_identifier)
+
+            # Only create/update OUT if there are 2+ punches for the day
+            if len(timestamps) > 1:
+                _upsert_checkin_out(employee, punch_date, last_punch, device_identifier)
 
             synced += len(timestamps)
             synced_punches.extend(group_record_ids)
