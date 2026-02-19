@@ -14,9 +14,9 @@ def cap_working_hours_to_shift_end(doc, method):
     IN time always stays as the actual checkin time.
     Skips if already On Leave / no shift / no in_time / no out_time.
     """
-    # DEBUG: confirm hook is firing
+    # DEBUG: confirm hook is now firing on before_submit
     frappe.log_error(
-        f"cap_working_hours_to_shift_end CALLED\n"
+        f"cap_working_hours before_submit CALLED\n"
         f"  doc={doc.name} status={doc.status} docstatus={doc.docstatus}\n"
         f"  shift={doc.shift} in_time={doc.in_time} out_time={doc.out_time}\n"
         f"  working_hours={doc.working_hours}",
@@ -81,6 +81,13 @@ def create_compensatory_leave_on_holiday(doc, method):
     On Attendance submit: if the employee punched IN and OUT on a holiday,
     auto-create and submit a Compensatory Leave Request so a leave day is allocated.
     """
+    frappe.log_error(
+        f"create_compensatory_leave_on_holiday CALLED\n"
+        f"  doc={doc.name} status={doc.status} docstatus={doc.docstatus}\n"
+        f"  shift={doc.shift} in_time={doc.in_time} out_time={doc.out_time}\n"
+        f"  working_hours={doc.working_hours}",
+        "Compendatory Leave DBG"
+    )
     # Only process if employee actually worked (both checkins present)
     if not doc.in_time or not doc.out_time:
         return
