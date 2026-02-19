@@ -5,24 +5,15 @@ from frappe.utils import getdate, get_datetime
 
 def cap_working_hours_to_shift_end(doc, method):
     """
-    Before Attendance is saved, apply two rules based on OUT time vs shift end time:
+    On Attendance before_submit: apply two rules based on OUT time vs shift end time:
 
-    1. OUT after shift end  → cap out_time to shift end, recalculate working_hours
-    2. OUT before shift end → keep working_hours as-is (actual out - in),
-                              set status = Half Day, leave_type = Leave Without Pay
+    1. OUT after shift end        → keep actual out_time, cap working_hours to (shift_end - in_time)
+    2. early_exit flagged by ERPNext → keep working_hours as-is (actual out - in),
+                                       set status = Half Day, leave_type = Leave Without Pay
 
     IN time always stays as the actual checkin time.
     Skips if already On Leave / no shift / no in_time / no out_time.
     """
-    # DEBUG: confirm hook is now firing on before_submit
-    frappe.log_error(
-        f"cap_working_hours before_submit CALLED\n"
-        f"  doc={doc.name} status={doc.status} docstatus={doc.docstatus}\n"
-        f"  shift={doc.shift} in_time={doc.in_time} out_time={doc.out_time}\n"
-        f"  working_hours={doc.working_hours}",
-        "DBG cap_working_hours"
-    )
-
     if not doc.out_time or not doc.shift or not doc.in_time:
         return
 
@@ -43,27 +34,15 @@ def cap_working_hours_to_shift_end(doc, method):
 
         out_time = get_datetime(doc.out_time)
 
-        frappe.log_error(
-            f"cap_working_hours_to_shift_end COMPARE\n"
-            f"  out_time={out_time}  shift_end_dt={shift_end_dt}\n"
-            f"  out > shift_end: {out_time > shift_end_dt}",
-            "DBG cap_working_hours"
-        )
-
         if out_time > shift_end_dt:
             # --- Rule 1: Late exit — cap working_hours to shift end, keep actual out_time ---
             in_time = get_datetime(doc.in_time)
-            new_wh = round(float((shift_end_dt - in_time).total_seconds()) / 3600, 2)
-            frappe.log_error(
-                f"cap_working_hours_to_shift_end CAPPING\n"
-                f"  out_time={doc.out_time} (kept as-is)\n"
-                f"  old working_hours={doc.working_hours} → new={new_wh}",
-                "DBG cap_working_hours"
+            doc.working_hours = round(
+                float((shift_end_dt - in_time).total_seconds()) / 3600, 2
             )
-            doc.working_hours = new_wh
 
-        elif out_time < shift_end_dt:
-            # --- Rule 2: Early exit — Half Day + LWP ---
+        elif doc.early_exit:
+            # --- Rule 2: Early exit (as flagged by ERPNext) — Half Day + LWP ---
             doc.status = "Half Day"
             doc.leave_type = "Leave Without Pay"
             # working_hours stays as calculated by ERPNext (actual out - in)
@@ -80,13 +59,6 @@ def create_compensatory_leave_on_holiday(doc, method):
     On Attendance submit: if the employee punched IN and OUT on a holiday,
     auto-create and submit a Compensatory Leave Request so a leave day is allocated.
     """
-    frappe.log_error(
-        f"create_compensatory_leave_on_holiday CALLED\n"
-        f"  doc={doc.name} status={doc.status} docstatus={doc.docstatus}\n"
-        f"  shift={doc.shift} in_time={doc.in_time} out_time={doc.out_time}\n"
-        f"  working_hours={doc.working_hours}",
-        "Compendatory Leave DBG"
-    )
     # Only process if employee actually worked (both checkins present)
     if not doc.in_time or not doc.out_time:
         return

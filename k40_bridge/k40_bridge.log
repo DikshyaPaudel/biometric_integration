@@ -2620,3 +2620,42 @@
 2026-02-19 12:53:50,706 - INFO - Synced: Employee 7 at 2026-02-19 12:47:50
 2026-02-19 12:53:50,706 - INFO - Done: 12 synced, 0 errors
 2026-02-19 12:53:50,706 - INFO - ==================================================
+2026-02-19 15:22:47,340 - INFO - Logging started. Log file path: /home/raindrop/frappe-bench/apps/biometric_integration/k40_bridge/k40_bridge.log
+2026-02-19 15:22:47,340 - INFO - K40 Bridge Started!
+2026-02-19 15:22:47,340 - INFO - K40 Device: 192.168.18.200
+2026-02-19 15:22:47,340 - INFO - ERPNext URL: https://demo-sb.raindropinc.com
+2026-02-19 15:22:47,340 - INFO - Target date: 2026-02-19
+2026-02-19 15:22:47,340 - INFO - ==================================================
+2026-02-19 15:22:47,340 - INFO - Connecting to K40 at 192.168.18.200
+2026-02-19 15:22:47,419 - INFO - Connected! Disabling device...
+2026-02-19 15:22:47,433 - INFO - Fetching attendance records...
+2026-02-19 15:22:47,787 - INFO - Re-enabling device...
+2026-02-19 15:22:47,809 - INFO - Disconnecting...
+2026-02-19 15:22:47,825 - INFO - Retrieved 455 records from K40
+2026-02-19 15:22:47,825 - INFO - Found 12 records for 2026-02-19
+2026-02-19 15:22:48,089 - INFO - ERPNext Response for 5_2026-02-19 08:54:07: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["5_2026-02-19 08:54:07"],"failed_punches":[]}}
+2026-02-19 15:22:48,089 - INFO - Synced: Employee 5 at 2026-02-19 08:54:07
+2026-02-19 15:22:48,128 - INFO - ERPNext Response for 17_2026-02-19 08:57:29: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 17"],"synced_punches":[],"failed_punches":["17_2026-02-19 08:57:29"]}}
+2026-02-19 15:22:48,128 - INFO - Synced: Employee 17 at 2026-02-19 08:57:29
+2026-02-19 15:22:48,167 - INFO - ERPNext Response for 6_2026-02-19 08:57:56: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["6_2026-02-19 08:57:56"],"failed_punches":[]}}
+2026-02-19 15:22:48,167 - INFO - Synced: Employee 6 at 2026-02-19 08:57:56
+2026-02-19 15:22:48,208 - INFO - ERPNext Response for 7_2026-02-19 09:10:27: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-19 09:10:27"],"failed_punches":[]}}
+2026-02-19 15:22:48,208 - INFO - Synced: Employee 7 at 2026-02-19 09:10:27
+2026-02-19 15:22:48,238 - INFO - ERPNext Response for 3_2026-02-19 09:31:39: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["3_2026-02-19 09:31:39"],"failed_punches":[]}}
+2026-02-19 15:22:48,239 - INFO - Synced: Employee 3 at 2026-02-19 09:31:39
+2026-02-19 15:22:48,275 - INFO - ERPNext Response for 1_2026-02-19 09:33:17: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["1_2026-02-19 09:33:17"],"failed_punches":[]}}
+2026-02-19 15:22:48,275 - INFO - Synced: Employee 1 at 2026-02-19 09:33:17
+2026-02-19 15:22:48,306 - INFO - ERPNext Response for 4_2026-02-19 09:33:26: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["4_2026-02-19 09:33:26"],"failed_punches":[]}}
+2026-02-19 15:22:48,307 - INFO - Synced: Employee 4 at 2026-02-19 09:33:26
+2026-02-19 15:22:48,386 - INFO - ERPNext Response for 7_2026-02-19 09:47:48: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-19 09:47:48"],"failed_punches":[]}}
+2026-02-19 15:22:48,386 - INFO - Synced: Employee 7 at 2026-02-19 09:47:48
+2026-02-19 15:22:48,417 - INFO - ERPNext Response for 16_2026-02-19 09:56:40: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 16"],"synced_punches":[],"failed_punches":["16_2026-02-19 09:56:40"]}}
+2026-02-19 15:22:48,417 - INFO - Synced: Employee 16 at 2026-02-19 09:56:40
+2026-02-19 15:22:48,455 - INFO - ERPNext Response for 19_2026-02-19 10:26:56: 200 - {"message":{"success":true,"synced":0,"errors":1,"message":"Synced 0 punches, 1 errors.","error_details":["Employee not found for device ID: 19"],"synced_punches":[],"failed_punches":["19_2026-02-19 10:26:56"]}}
+2026-02-19 15:22:48,455 - INFO - Synced: Employee 19 at 2026-02-19 10:26:56
+2026-02-19 15:22:48,486 - INFO - ERPNext Response for 8_2026-02-19 11:00:50: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["8_2026-02-19 11:00:50"],"failed_punches":[]}}
+2026-02-19 15:22:48,487 - INFO - Synced: Employee 8 at 2026-02-19 11:00:50
+2026-02-19 15:22:48,522 - INFO - ERPNext Response for 7_2026-02-19 12:47:50: 200 - {"message":{"success":true,"synced":1,"errors":0,"message":"Synced 1 punches, 0 errors.","error_details":[],"synced_punches":["7_2026-02-19 12:47:50"],"failed_punches":[]}}
+2026-02-19 15:22:48,522 - INFO - Synced: Employee 7 at 2026-02-19 12:47:50
+2026-02-19 15:22:48,522 - INFO - Done: 12 synced, 0 errors
+2026-02-19 15:22:48,522 - INFO - ==================================================
