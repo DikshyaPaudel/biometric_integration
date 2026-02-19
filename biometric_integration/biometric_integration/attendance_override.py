@@ -14,6 +14,15 @@ def cap_working_hours_to_shift_end(doc, method):
     IN time always stays as the actual checkin time.
     Skips if already On Leave / no shift / no in_time / no out_time.
     """
+    # DEBUG: confirm hook is firing
+    frappe.log_error(
+        f"cap_working_hours_to_shift_end CALLED\n"
+        f"  doc={doc.name} status={doc.status} docstatus={doc.docstatus}\n"
+        f"  shift={doc.shift} in_time={doc.in_time} out_time={doc.out_time}\n"
+        f"  working_hours={doc.working_hours}",
+        "DBG cap_working_hours"
+    )
+
     if not doc.out_time or not doc.shift or not doc.in_time:
         return
 
@@ -34,13 +43,25 @@ def cap_working_hours_to_shift_end(doc, method):
 
         out_time = get_datetime(doc.out_time)
 
+        frappe.log_error(
+            f"cap_working_hours_to_shift_end COMPARE\n"
+            f"  out_time={out_time}  shift_end_dt={shift_end_dt}\n"
+            f"  out > shift_end: {out_time > shift_end_dt}",
+            "DBG cap_working_hours"
+        )
+
         if out_time > shift_end_dt:
             # --- Rule 1: Late exit — cap to shift end ---
             in_time = get_datetime(doc.in_time)
-            doc.out_time = shift_end_dt
-            doc.working_hours = round(
-                float((shift_end_dt - in_time).total_seconds()) / 3600, 2
+            new_wh = round(float((shift_end_dt - in_time).total_seconds()) / 3600, 2)
+            frappe.log_error(
+                f"cap_working_hours_to_shift_end CAPPING\n"
+                f"  old out_time={doc.out_time} → new={shift_end_dt}\n"
+                f"  old working_hours={doc.working_hours} → new={new_wh}",
+                "DBG cap_working_hours"
             )
+            doc.out_time = shift_end_dt
+            doc.working_hours = new_wh
 
         elif out_time < shift_end_dt:
             # --- Rule 2: Early exit — Half Day + LWP ---
