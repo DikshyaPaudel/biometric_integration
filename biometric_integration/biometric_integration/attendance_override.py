@@ -51,16 +51,15 @@ def cap_working_hours_to_shift_end(doc, method):
         )
 
         if out_time > shift_end_dt:
-            # --- Rule 1: Late exit — cap to shift end ---
+            # --- Rule 1: Late exit — cap working_hours to shift end, keep actual out_time ---
             in_time = get_datetime(doc.in_time)
             new_wh = round(float((shift_end_dt - in_time).total_seconds()) / 3600, 2)
             frappe.log_error(
                 f"cap_working_hours_to_shift_end CAPPING\n"
-                f"  old out_time={doc.out_time} → new={shift_end_dt}\n"
+                f"  out_time={doc.out_time} (kept as-is)\n"
                 f"  old working_hours={doc.working_hours} → new={new_wh}",
                 "DBG cap_working_hours"
             )
-            doc.out_time = shift_end_dt
             doc.working_hours = new_wh
 
         elif out_time < shift_end_dt:
