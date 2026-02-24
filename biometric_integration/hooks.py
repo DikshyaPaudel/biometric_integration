@@ -143,7 +143,7 @@ doc_events = {
     "Attendance": {
         "before_save": "biometric_integration.biometric_integration.attendance_override.set_shift_deviation_fields",
         # "before_submit": "biometric_integration.biometric_integration.attendance_override.cap_working_hours_to_shift_end",
-        "on_submit": "biometric_integration.biometric_integration.attendance_override.create_compensatory_leave_on_holiday",
+        # "on_submit": "biometric_integration.biometric_integration.attendance_override.create_compensatory_leave_on_holiday",
     }
 }
 
