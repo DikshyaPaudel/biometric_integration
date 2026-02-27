@@ -139,6 +139,8 @@ app_license = "mit"
 
 fixtures = ["Custom Field"]
 
+
+'''
 doc_events = {
     "Attendance": {
         "before_save": "biometric_integration.biometric_integration.attendance_override.set_shift_deviation_fields",
@@ -146,6 +148,28 @@ doc_events = {
         # "on_submit": "biometric_integration.biometric_integration.attendance_override.create_compensatory_leave_on_holiday",
     }
 }
+
+'''
+
+
+
+doc_events = {
+    "Attendance": {
+        "before_save": [
+            #"biometric_integration.biometric_integration.attendance_override.set_shift_deviation_fields",
+        ],
+        "before_submit": [
+            "biometric_integration.biometric_integration.attendance_override.adjust_out_time"
+        ],
+        "on_update": [
+           "biometric_integration.biometric_integration.attendance_override.auto_submit_attendance"
+        ]
+        # "before_submit": "biometric_integration.biometric_integration.attendance_override.cap_working_hours_to_shift_end",
+        # "on_submit": "biometric_integration.biometric_integration.attendance_override.create_compensatory_leave_on_holiday",
+    }
+}
+
+
 
 # Scheduled Tasks
 # ---------------
@@ -226,4 +250,3 @@ doc_events = {
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-

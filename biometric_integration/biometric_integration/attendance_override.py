@@ -187,3 +187,120 @@ def create_compensatory_leave_on_holiday(doc, method):
             frappe.get_traceback(),
             f"Error creating compensatory leave for Attendance {doc.name}"
         )
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+import frappe
+from frappe.utils import get_time, get_datetime, get_traceback
+
+APPROVED_WORKFLOW_KEYWORDS = ("approve",)
+REJECTED_WORKFLOW_KEYWORDS = ("reject",)
+
+
+def _workflow_state(doc):
+	return (doc.get("workflow_state") or "").strip().lower()
+
+
+def _is_approved(doc):
+	state = _workflow_state(doc)
+	return any(keyword in state for keyword in APPROVED_WORKFLOW_KEYWORDS)
+
+
+def _is_rejected(doc):
+	state = _workflow_state(doc)
+	return any(keyword in state for keyword in REJECTED_WORKFLOW_KEYWORDS)
+
+
+def adjust_out_time(doc, method=None):
+	"""
+	Adjusts Attendance out_time to shift end time if earlier.
+	Triggered before_save / before_submit.
+	Only adjusts when workflow state is Approved.
+	"""
+	# Never change out_time for rejected records.
+	if _is_rejected(doc):
+		return
+
+	# On submit path (Approve), enforce adjustment regardless of workflow_state label timing.
+	if method != "before_submit" and not _is_approved(doc):
+		return
+	
+	# Ensure we have required fields
+	if not doc.attendance_date or not doc.out_time or not doc.shift:
+		return
+	
+	try:
+		# Get the shift dynamically from attendance doc.shift (the shift field in Attendance)
+		shift = frappe.get_cached_doc("Shift Type", doc.shift)
+		if not shift or not shift.end_time:
+			return
+		
+		# Get shift end time
+		shift_end = get_time(shift.end_time)
+		
+		# Convert out_time to datetime
+		out_dt = get_datetime(doc.out_time)
+		
+		# Create shift_end_dt with same date as attendance_date
+		shift_end_dt = get_datetime(doc.attendance_date).replace(
+			hour=int(shift_end.hour or 0),
+			minute=int(shift_end.minute or 0),
+			second=0,
+			microsecond=0
+		)
+		
+		# If out_time is EARLIER than shift_end, adjust it
+		if out_dt < shift_end_dt:
+			doc.out_time = shift_end_dt
+	
+	except Exception:
+		frappe.log_error(frappe.get_traceback(), "Attendance Out Time Adjustment Failed")
+
+
+
+def auto_submit_attendance(doc, method=None):
+	"""
+	Auto-submit Attendance if out_time >= shift end_time.
+	Triggered on_update.
+	"""
+	# Ensure we have required fields
+	if not doc.name or not doc.attendance_date or not doc.out_time or not doc.shift:
+		return
+	
+	# Skip if already submitted
+	if doc.docstatus != 0:
+		return
+	
+	try:
+		shift = frappe.get_cached_doc("Shift Type", doc.shift)
+		if not shift or not shift.end_time:
+			return
+		
+		shift_end = get_time(shift.end_time)
+		shift_end_dt = get_datetime(doc.attendance_date).replace(
+			hour=int(shift_end.hour or 0),
+			minute=int(shift_end.minute or 0),
+			second=0,
+			microsecond=0
+		)
+		
+		out_dt = get_datetime(doc.out_time)
+		
+		# Check if out_time >= shift end time
+		if out_dt >= shift_end_dt:
+			doc.workflow_state = "Approved"
+			doc.status = "Present"
+			doc.flags.ignore_permissions = True
+			doc.submit()
+	
+	except Exception:
+		frappe.log_error(frappe.get_traceback(), "Attendance Auto Submit Failed")
