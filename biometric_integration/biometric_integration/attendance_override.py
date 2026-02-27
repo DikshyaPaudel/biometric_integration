@@ -1,6 +1,7 @@
 import frappe
 from datetime import datetime, timedelta
 from frappe.utils import getdate, get_datetime
+from frappe.utils import get_time, get_datetime, get_traceback
 
 
 def _round_to_minute(seconds):
@@ -188,19 +189,7 @@ def create_compensatory_leave_on_holiday(doc, method):
             f"Error creating compensatory leave for Attendance {doc.name}"
         )
 
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
-import frappe
-from frappe.utils import get_time, get_datetime, get_traceback
+# Put end time if approved in out time
 
 APPROVED_WORKFLOW_KEYWORDS = ("approve",)
 REJECTED_WORKFLOW_KEYWORDS = ("reject",)
@@ -265,7 +254,7 @@ def adjust_out_time(doc, method=None):
 	except Exception:
 		frappe.log_error(frappe.get_traceback(), "Attendance Out Time Adjustment Failed")
 
-
+# Automatically submit attendance if present full time 
 
 def auto_submit_attendance(doc, method=None):
 	"""
