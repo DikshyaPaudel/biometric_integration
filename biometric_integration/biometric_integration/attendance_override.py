@@ -189,6 +189,8 @@ def create_compensatory_leave_on_holiday(doc, method):
             f"Error creating compensatory leave for Attendance {doc.name}"
         )
 
+
+
 # Put end time if approved in out time
 
 APPROVED_WORKFLOW_KEYWORDS = ("approve",)
@@ -253,6 +255,10 @@ def adjust_out_time(doc, method=None):
 	
 	except Exception:
 		frappe.log_error(frappe.get_traceback(), "Attendance Out Time Adjustment Failed")
+
+
+
+
 
 # Automatically submit attendance if present full time 
 
