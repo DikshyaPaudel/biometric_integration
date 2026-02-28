@@ -156,7 +156,7 @@ doc_events = {
 doc_events = {
     "Attendance": {
         "before_save": [
-            #"biometric_integration.biometric_integration.attendance_override.set_shift_deviation_fields",
+            "biometric_integration.biometric_integration.attendance_override.set_shift_deviation_fields",
         ],
         "before_submit": [
             "biometric_integration.biometric_integration.attendance_override.adjust_out_time"
