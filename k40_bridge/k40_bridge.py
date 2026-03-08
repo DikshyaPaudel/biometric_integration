@@ -16,7 +16,7 @@ import requests
 # ============================================
 # CONFIGURATION
 # ============================================
-K40_IP = '192.168.18.200'
+K40_IP = '192.168.24.246'
 K40_SERIAL = 'A6F521360285'
 
 ERPNEXT_URL = 'https://sandboxavinas-demo.raindropinc.com'
