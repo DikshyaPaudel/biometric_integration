@@ -5,7 +5,6 @@ Pulls attendance from K40 device and pushes to ERPNext.
 Run: python3 k40_bridge.py              -> syncs from last run date up to yesterday
 Run: python3 k40_bridge.py 2026-02-13   -> syncs from that date up to yesterday
 """
-
 import sys
 import json
 import logging
@@ -17,10 +16,10 @@ import requests
 # ============================================
 # CONFIGURATION
 # ============================================
-K40_IP = '192.168.24.246'
-K40_SERIAL = 'A6F521360285'
+K40_IP = '192.168.18.200'
+K40_SERIAL = 'A6F5215360564'
 
-ERPNEXT_URL = 'https://sandboxavinas-demo.raindropinc.com'
+ERPNEXT_URL = 'https://demo-sb.raindropinc.com'
 WEBHOOK_PATH = '/api/method/biometric_integration.biometric_integration.biometric_integration.zkteco_push_attendance'
 
 # Files stored next to the exe/script
