@@ -2,28 +2,30 @@
 """
 K40 to ERPNext Bridge
 Pulls attendance from K40 device and pushes to ERPNext.
-Run: python3 k40_bridge.py              -> syncs today
-Run: python3 k40_bridge.py 2026-02-13   -> syncs specific date
+Run: python3 k40_bridge.py              -> syncs from last run date up to yesterday
+Run: python3 k40_bridge.py 2026-02-13   -> syncs from that date up to yesterday
 """
 
 import sys
+import json
 import logging
 import os
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from zk import ZK
 import requests
-
 # ============================================
 # CONFIGURATION
 # ============================================
-K40_IP = '192.168.18.200'
-K40_SERIAL = 'A6F5215360564'
 
-ERPNEXT_URL = 'https://demo-sb.raindropinc.com/'
+K40_IP = '192.168.24.246'
+K40_SERIAL = 'A6F521360285'
+ERPNEXT_URL = 'https://demo-sb.raindropinc.com'
 WEBHOOK_PATH = '/api/method/biometric_integration.biometric_integration.biometric_integration.zkteco_push_attendance'
 
-# Log file — same folder as the script/exe
-LOG_FILE = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), "k40_bridge.log")
+# Files stored next to the exe/script
+BASE_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
+LOG_FILE = os.path.join(BASE_DIR, "k40_bridge.log")
+LAST_SYNC_FILE = os.path.join(BASE_DIR, "last_sync.json")
 
 # ============================================
 # SETUP LOGGING
@@ -39,6 +41,31 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 logger.info(f"Logging started. Log file path: {LOG_FILE}")
+
+# ============================================
+# LAST SYNC TRACKING
+# ============================================
+def get_last_sync_date():
+    """Read last synced date from file. Returns None if file doesn't exist."""
+    if not os.path.exists(LAST_SYNC_FILE):
+        return None
+    try:
+        with open(LAST_SYNC_FILE, "r") as f:
+            data = json.load(f)
+        return datetime.strptime(data["last_sync_date"], "%Y-%m-%d").date()
+    except Exception as e:
+        logger.warning(f"Could not read last sync file: {e}")
+        return None
+
+
+def save_last_sync_date(sync_date):
+    """Save the last successfully synced date to file."""
+    try:
+        with open(LAST_SYNC_FILE, "w") as f:
+            json.dump({"last_sync_date": sync_date.strftime("%Y-%m-%d")}, f)
+        logger.info(f"Last sync date saved: {sync_date}")
+    except Exception as e:
+        logger.error(f"Could not save last sync file: {e}")
 
 # ============================================
 # FUNCTIONS
@@ -105,31 +132,46 @@ def send_to_erpnext(attendance):
         logger.error(f"Error sending Employee {attendance.user_id} to ERPNext: {e}")
         return 'error'
 
+
 def main():
     """Main entry point"""
+    yesterday = date.today() - timedelta(days=1)
+
+    # Determine start date
     if len(sys.argv) > 1:
-        target_date = datetime.strptime(sys.argv[1], "%Y-%m-%d").date()
+        from_date = datetime.strptime(sys.argv[1], "%Y-%m-%d").date()
+        logger.info(f"Start date from argument: {from_date}")
     else:
-        target_date = date.today()
+        last_sync = get_last_sync_date()
+        if last_sync:
+            from_date = last_sync + timedelta(days=1)
+            logger.info(f"Resuming from last sync: {last_sync} → syncing from {from_date}")
+        else:
+            from_date = yesterday
+            logger.info(f"No previous sync found. Syncing yesterday: {from_date}")
+
+    if from_date > yesterday:
+        logger.info(f"Already up to date. Last sync was {from_date - timedelta(days=1)}, nothing new to sync.")
+        return
 
     logger.info("K40 Bridge Started!")
     logger.info(f"K40 Device: {K40_IP}")
     logger.info(f"ERPNext URL: {ERPNEXT_URL}")
-    logger.info(f"Target date: {target_date}")
+    logger.info(f"Syncing from {from_date} to {yesterday}")
     logger.info("="*50)
 
-    # Get attendance from K40
+    # Get all attendance from K40
     attendances = get_attendance_from_k40()
 
-    # Filter to target date only
-    attendances = [att for att in attendances if att.timestamp.date() == target_date]
+    # Filter to date range: from_date <= date <= yesterday
+    attendances = [att for att in attendances if from_date <= att.timestamp.date() <= yesterday]
 
     if not attendances:
-        logger.info("No records for this date")
+        logger.info(f"No records found between {from_date} and {yesterday}")
+        save_last_sync_date(yesterday)
         return
-        
 
-    logger.info(f"Found {len(attendances)} records for {target_date}")
+    logger.info(f"Found {len(attendances)} records from {from_date} to {yesterday}")
 
     synced_count = 0
     error_count = 0
@@ -143,6 +185,9 @@ def main():
 
     logger.info(f"Done: {synced_count} synced, {error_count} errors")
     logger.info("="*50)
+
+    # Save last sync date only if no errors (or partial — save yesterday anyway)
+    save_last_sync_date(yesterday)
 
 
 if __name__ == '__main__':
