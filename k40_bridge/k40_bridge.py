@@ -17,8 +17,8 @@ import requests
 # CONFIGURATION
 # ============================================
 
-K40_IP = '192.168.24.246'
-K40_SERIAL = 'A6F521360285'
+K40_IP = '192.168.18.200'
+K40_SERIAL = 'A6F5215360564'
 ERPNEXT_URL = 'https://demo-sb.raindropinc.com'
 WEBHOOK_PATH = '/api/method/biometric_integration.biometric_integration.biometric_integration.zkteco_push_attendance'
 
@@ -186,8 +186,11 @@ def main():
     logger.info(f"Done: {synced_count} synced, {error_count} errors")
     logger.info("="*50)
 
-    # Save last sync date only if no errors (or partial — save yesterday anyway)
-    save_last_sync_date(yesterday)
+    # Only save last sync date if all records succeeded
+    if error_count == 0:
+        save_last_sync_date(yesterday)
+    else:
+        logger.warning(f"{error_count} errors — last_sync.json NOT updated. Will retry on next run.")
 
 
 if __name__ == '__main__':
