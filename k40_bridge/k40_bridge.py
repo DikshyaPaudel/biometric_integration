@@ -19,7 +19,7 @@ import requests
 K40_IP = '192.168.18.200'
 K40_SERIAL = 'A6F5215360564'
 
-ERPNEXT_URL = 'https://rpl-live.raindropinc.com'
+ERPNEXT_URL = 'https://demo-sb.raindropinc.com/'
 WEBHOOK_PATH = '/api/method/biometric_integration.biometric_integration.biometric_integration.zkteco_push_attendance'
 
 # Log file — same folder as the script/exe
