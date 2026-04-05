@@ -9,6 +9,7 @@ import sys
 import json
 import logging
 import os
+import time
 from datetime import datetime, date, timedelta
 from zk import ZK
 import requests
@@ -71,6 +72,20 @@ def save_last_sync_date(sync_date):
 # ============================================
 # FUNCTIONS
 # ============================================
+
+def wait_for_internet(max_wait_minutes=30):
+    """Wait until ERPNext is reachable, retrying every 2 minutes."""
+    for attempt in range(max_wait_minutes // 2):
+        try:
+            requests.get(ERPNEXT_URL, timeout=5)
+            logger.info("Internet available. Proceeding with sync.")
+            return True
+        except Exception:
+            logger.warning(f"No internet. Retrying in 2 minutes... (attempt {attempt + 1})")
+            time.sleep(120)
+    logger.error("Internet not available after 30 minutes. Exiting.")
+    return False
+
 
 def get_attendance_from_k40():
     """Connect to K40 and retrieve attendance records"""
@@ -135,6 +150,9 @@ def send_to_erpnext(attendance):
 
 def main():
     """Main entry point"""
+    if not wait_for_internet():
+        return
+
     yesterday = date.today() - timedelta(days=1)
 
     # Determine start date
