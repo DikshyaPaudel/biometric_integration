@@ -13,13 +13,11 @@ import time
 from datetime import datetime, date, timedelta
 from zk import ZK
 import requests
-
 # ============================================
 # CONFIGURATION
 # ============================================
 K40_IP = '192.168.18.200'
 K40_SERIAL = 'A6F5215360564'
-
 ERPNEXT_URL = 'https://demo-sb.raindropinc.com'
 WEBHOOK_PATH = '/api/method/biometric_integration.biometric_integration.biometric_integration.zkteco_push_attendance'
 
@@ -69,9 +67,6 @@ def save_last_sync_date(sync_date):
     except Exception as e:
         logger.error(f"Could not save last sync file: {e}")
 
-# ============================================
-# FUNCTIONS
-# ============================================
 
 def wait_for_k40(max_wait_minutes=30):
     """Wait until K40 device is reachable on local network."""
