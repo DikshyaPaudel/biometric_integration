@@ -73,17 +73,19 @@ def save_last_sync_date(sync_date):
 # FUNCTIONS
 # ============================================
 
-def wait_for_internet(max_wait_minutes=30):
-    """Wait until ERPNext is reachable, retrying every 2 minutes."""
+def wait_for_k40(max_wait_minutes=30):
+    """Wait until K40 device is reachable on local network."""
+    import socket
     for attempt in range(max_wait_minutes // 2):
         try:
-            requests.get(ERPNEXT_URL, timeout=5)
-            logger.info("Internet available. Proceeding with sync.")
+            sock = socket.create_connection((K40_IP, 4370), timeout=5)
+            sock.close()
+            logger.info("K40 device reachable. Proceeding with sync.")
             return True
         except Exception:
-            logger.warning(f"No internet. Retrying in 2 minutes... (attempt {attempt + 1})")
+            logger.warning(f"K40 not reachable. Retrying in 2 minutes... (attempt {attempt + 1})")
             time.sleep(120)
-    logger.error("Internet not available after 30 minutes. Exiting.")
+    logger.error("K40 not reachable after 30 minutes. Exiting.")
     return False
 
 
@@ -150,7 +152,7 @@ def send_to_erpnext(attendance):
 
 def main():
     """Main entry point"""
-    if not wait_for_internet():
+    if not wait_for_k40():
         return
 
     yesterday = date.today() - timedelta(days=1)
