@@ -238,7 +238,6 @@ def create_leave_application_on_holiday(doc, method):
         leave_app.leave_approver = "mira@raindropinc.com"
         leave_app.status = "Open"
         leave_app.insert(ignore_permissions=True)
-        leave_app.submit()
 
         frappe.logger("biometric").info(
             f"Leave Application {leave_app.name} created for "
