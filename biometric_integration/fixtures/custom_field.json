@@ -1,0 +1,60 @@
+[
+  {
+    "doctype": "Custom Field",
+    "name": "Attendance-custom_late_entry",
+    "dt": "Attendance",
+    "fieldname": "custom_late_entry",
+    "label": "Late Entry (mins)",
+    "fieldtype": "Int",
+    "insert_after": "late_entry",
+    "read_only": 1,
+    "no_copy": 1,
+    "description": "Minutes late compared to shift start (rounded to nearest minute). Auto-calculated on save."
+  },
+  {
+    "doctype": "Custom Field",
+    "name": "Attendance-custom_early_entry",
+    "dt": "Attendance",
+    "fieldname": "custom_early_entry",
+    "label": "Early Entry (mins)",
+    "fieldtype": "Int",
+    "insert_after": "custom_late_entry",
+    "read_only": 1,
+    "no_copy": 1,
+    "description": "Minutes early compared to shift start (rounded to nearest minute). Auto-calculated on save."
+  },
+  {
+    "doctype": "Custom Field",
+    "name": "Attendance-custom_early_exit",
+    "dt": "Attendance",
+    "fieldname": "custom_early_exit",
+    "label": "Early Exit (mins)",
+    "fieldtype": "Int",
+    "insert_after": "early_exit",
+    "read_only": 1,
+    "no_copy": 1,
+    "description": "Minutes early compared to shift end (rounded to nearest minute). Auto-calculated on save."
+  },
+  {
+    "doctype": "Custom Field",
+    "name": "Attendance-custom_late_exit",
+    "dt": "Attendance",
+    "fieldname": "custom_late_exit",
+    "label": "Late Exit (mins)",
+    "fieldtype": "Int",
+    "insert_after": "custom_early_exit",
+    "read_only": 1,
+    "no_copy": 1,
+    "description": "Minutes late compared to shift end (rounded to nearest minute). Auto-calculated on save."
+  },
+  {
+    "doctype": "Custom Field",
+    "name": "Shift Type-custom_compensatory_leave_offset_days",
+    "dt": "Shift Type",
+    "fieldname": "custom_compensatory_leave_offset_days",
+    "label": "Compensatory Leave Offset Days",
+    "fieldtype": "Int",
+    "insert_after": "description",
+    "description": "Number of days after the holiday to create a Leave Application when employee works on a holiday. Leave blank or 0 to disable."
+  }
+]

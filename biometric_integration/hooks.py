@@ -1,3 +1,16 @@
+fixtures = [
+    {
+        "dt": "Custom Field",
+        "filters": [["name", "in", [
+            "Attendance-custom_late_entry",
+            "Attendance-custom_early_entry",
+            "Attendance-custom_early_exit",
+            "Attendance-custom_late_exit",
+            "Shift Type-custom_compensatory_leave_offset_days",
+        ]]]
+    }
+]
+
 app_name = "biometric_integration"
 app_title = "Biometric Integration"
 app_publisher = "Dikshya"
@@ -139,8 +152,12 @@ app_license = "mit"
 
 doc_events = {
     "Attendance": {
+        "before_save": "biometric_integration.biometric_integration.attendance_override.set_shift_deviation_fields",
         "before_submit": "biometric_integration.biometric_integration.attendance_override.cap_working_hours_to_shift_end",
-        "on_submit": "biometric_integration.biometric_integration.attendance_override.create_compensatory_leave_on_holiday",
+        "on_submit": [
+            "biometric_integration.biometric_integration.attendance_override.create_compensatory_leave_on_holiday",
+            "biometric_integration.biometric_integration.attendance_override.create_leave_application_on_holiday",
+        ],
     }
 }
 
