@@ -2,6 +2,12 @@
 
 Biometric Integration
 
+### Attendance guide (PDF)
+
+- `apps/biometric_integration/docs/attendance_scenarios_guide.pdf`
+- Source (editable): `apps/biometric_integration/docs/attendance_scenarios_guide.md`
+- Regenerate PDF: `./env/bin/python apps/biometric_integration/docs/generate_attendance_scenarios_guide_pdf.py`
+
 ### Installation
 
 You can install this app using the [bench](https://github.com/frappe/bench) CLI:
